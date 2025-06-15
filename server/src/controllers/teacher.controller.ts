@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler";
-import { Teacher, ITeacher } from "../model/teacherModel"; // adjust path as needed
+import { Teacher, ITeacher } from "../model/teacherModel";
 
-// @desc    Create a new teacher
-// @route   POST /api/teachers
-// @access  Public (or Protected once you add auth)
 export const createTeacher = asyncHandler(
   async (req: Request, res: Response) => {
     const {
@@ -17,7 +14,6 @@ export const createTeacher = asyncHandler(
       teacherProfile,
     } = req.body;
 
-    // Basic validation
     if (
       !teacherName ||
       !teacherEmail ||
@@ -27,7 +23,6 @@ export const createTeacher = asyncHandler(
       return res.status(400).json({ message: "Required fields are missing." });
     }
 
-    // Check for existing email or mobile
     const emailExists = await Teacher.findOne({ teacherEmail });
     if (emailExists) {
       return res.status(400).json({ message: "Email already in use." });
@@ -52,9 +47,6 @@ export const createTeacher = asyncHandler(
   }
 );
 
-// @desc    Get all teachers
-// @route   GET /api/teachers
-// @access  Public (or Protected)
 export const getAllTeachers = asyncHandler(
   async (req: Request, res: Response) => {
     const teachers = await Teacher.find();
@@ -62,9 +54,6 @@ export const getAllTeachers = asyncHandler(
   }
 );
 
-// @desc    Get a single teacher by ID
-// @route   GET /api/teachers/:id
-// @access  Public (or Protected)
 export const getTeacherById = asyncHandler(
   async (req: Request, res: Response) => {
     const teacher = await Teacher.findById(req.params.id);
@@ -77,9 +66,6 @@ export const getTeacherById = asyncHandler(
   }
 );
 
-// @desc    Update a teacher
-// @route   PUT /api/teachers/:id
-// @access  Public (or Protected)
 export const updateTeacher = asyncHandler(
   async (req: Request, res: Response) => {
     const teacher = await Teacher.findById(req.params.id);
@@ -88,7 +74,6 @@ export const updateTeacher = asyncHandler(
       return res.status(404).json({ message: "Teacher not found." });
     }
 
-    // Prevent updating to an email/mobile that already exists on another document
     if (
       req.body.teacherEmail &&
       req.body.teacherEmail !== teacher.teacherEmail
@@ -127,9 +112,6 @@ export const updateTeacher = asyncHandler(
   }
 );
 
-// @desc    Delete a teacher
-// @route   DELETE /api/teachers/:id
-// @access  Public (or Protected)
 export const deleteTeacher = asyncHandler(
   async (req: Request, res: Response) => {
     const teacher = await Teacher.findById(req.params.id);

@@ -10,7 +10,12 @@ import teacherRoutes from "./router/teacher.routes";
 import EnquiryRoutes from "./router/enquiry.routes";
 const app: Application = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://music-application-e7h3.vercel.app"], // frontend domain
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded());

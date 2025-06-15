@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler";
-import { ClassBatch } from "../model/classBatchModel"; // adjust path as needed
+import { ClassBatch } from "../model/classBatchModel";
 
-// @desc    Create a new class batch
-// @route   POST /api/batches
-// @access  Public or Protected (add auth later if needed)
 export const createBatch = asyncHandler(async (req: Request, res: Response) => {
   const {
     batchName,
@@ -33,9 +30,6 @@ export const createBatch = asyncHandler(async (req: Request, res: Response) => {
   res.status(201).json(batch);
 });
 
-// @desc    Get all class batches
-// @route   GET /api/batches
-// @access  Public or Protected
 export const getAllBatches = asyncHandler(
   async (req: Request, res: Response) => {
     const batches = await ClassBatch.find()
@@ -45,9 +39,6 @@ export const getAllBatches = asyncHandler(
   }
 );
 
-// @desc    Get a single batch by ID
-// @route   GET /api/batches/:id
-// @access  Public or Protected
 export const getBatchById = asyncHandler(
   async (req: Request, res: Response) => {
     const batch = await ClassBatch.findById(req.params.id)
@@ -62,9 +53,6 @@ export const getBatchById = asyncHandler(
   }
 );
 
-// @desc    Update a batch
-// @route   PUT /api/batches/:id
-// @access  Public or Protected
 export const updateBatch = asyncHandler(async (req: Request, res: Response) => {
   const batch = await ClassBatch.findById(req.params.id);
 
@@ -81,9 +69,6 @@ export const updateBatch = asyncHandler(async (req: Request, res: Response) => {
   res.json(updatedBatch);
 });
 
-// @desc    Delete a batch
-// @route   DELETE /api/batches/:id
-// @access  Public or Protected
 export const deleteBatch = asyncHandler(async (req: Request, res: Response) => {
   const batch = await ClassBatch.findById(req.params.id);
 
