@@ -1,0 +1,14 @@
+@font-face {
+  font-family: Shockwave;
+  src: url("../src/assets/fonts/Shockwave.otf");
+}
+@font-face {
+  font-family: DreamyChocolate;
+  src: url("../src/assets/fonts/Dreamy\ Chocolate.otf");
+}
+@import "tailwindcss";
+
+@theme {
+  --font-shockwave: "Shockwave";
+  --font-dreamyChocolate: "DreamyChocolate";
+}
