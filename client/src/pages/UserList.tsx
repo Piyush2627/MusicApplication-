@@ -6,7 +6,9 @@ function UserList() {
 
   const fetchUserData = async () => {
     try {
-      const UserInstanceData = await axios.get("/api/getAllUser");
+      const UserInstanceData = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/getAllUser`,
+      );
       setIsUserData(UserInstanceData.data);
     } catch (error) {
       console.log(error);
@@ -19,7 +21,9 @@ function UserList() {
 
   const handleDel = async (objectID: string) => {
     try {
-      const userDelete = await axios.delete(`/api/deleteUser/${objectID}`);
+      const userDelete = await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/deleteUser/${objectID}`,
+      );
       console.log(userDelete);
 
       // Update local state to remove deleted user

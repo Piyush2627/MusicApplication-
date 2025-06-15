@@ -9,7 +9,9 @@ function BatchList() {
   const { data = [], isPending } = useQuery<ClassBatchType[]>({
     queryKey: ["batches"],
     queryFn: async () => {
-      const res = await axios.get("/api/batches");
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
+      );
       console.log(res.data);
 
       return res.data; // Ensure this is an array!

@@ -24,7 +24,10 @@ function SignUp() {
   const registerUserOnclick = async () => {
     console.log(isUserRegistration);
     try {
-      const res = await axios.post("/api/signup", isUserRegistration);
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/signup`,
+        isUserRegistration,
+      );
       console.log(res.data);
     } catch (error) {
       console.log(error);

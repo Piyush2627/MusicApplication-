@@ -18,12 +18,16 @@ function AddAttendanceForm() {
   const queryClient = useQueryClient();
 
   const fetchClassBatch = async () => {
-    const res = await axios.get("/api/batches");
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
+    );
     return res.data;
   };
 
   const fetchAllStudents = async () => {
-    const res = await axios.get("/api/getAllStudent"); // adjust path if needed
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+    ); // adjust path if needed
     return res.data;
   };
 
@@ -51,7 +55,10 @@ function AddAttendanceForm() {
         attendanceStatus: "Present" | "Absent" | "Late";
       }[];
     }) => {
-      const res = await axios.post("/api/attendance", payload);
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/attendance`,
+        payload,
+      );
       return res.data;
     },
     onSuccess: () => {

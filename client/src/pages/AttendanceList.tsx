@@ -19,7 +19,9 @@ interface AttendanceRecord {
 }
 
 const fetchAttendance = async (): Promise<AttendanceRecord[]> => {
-  const response = await axios.get("/api/attendance");
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/attendance`,
+  );
   return response.data.data;
 };
 

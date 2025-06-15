@@ -46,7 +46,10 @@ function AddStudentsPage() {
     error,
   } = useMutation({
     mutationFn: async (newStudent: StudentsType) => {
-      const response = await axios.post("/api/createStudent", newStudent);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/createStudent`,
+        newStudent,
+      );
       return response.data;
     },
     onSuccess: () => {

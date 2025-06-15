@@ -6,7 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 
 function StudentAttendanceView() {
   const fetchStudents = async (): Promise<StudentsType[]> => {
-    const response = await axios.get("/api/getAllStudent");
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+    );
     console.log(response.data.data);
     return response.data.data;
   };

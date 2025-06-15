@@ -26,7 +26,10 @@ const EnquiryPage: React.FC = () => {
 
   const mutation = useMutation({
     mutationFn: (newEnquiry: EnquiryInput) =>
-      axios.post("/api/enquiries", newEnquiry),
+      axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/enquiries`,
+        newEnquiry,
+      ),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["enquiries"] }); // 🔄 refetch list
     },

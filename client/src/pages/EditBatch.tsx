@@ -27,7 +27,10 @@ function EditBatch() {
       batchStudents: updatedBatch.batchStudents.map((s) => s._id),
     };
 
-    const res = await axios.put(`/api/batches/${batchId}`, payload);
+    const res = await axios.put(
+      `${import.meta.env.VITE_API_BASE_URL}/api/batches/${batchId}`,
+      payload,
+    );
     return res.data;
   };
 
@@ -56,12 +59,16 @@ function EditBatch() {
   const { batchId } = useParams();
 
   const fetchStudents = async () => {
-    const res = await axios.get("/api/getAllStudent");
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+    );
     return res.data as StudentsType[];
   };
 
   const fetchBatch = async () => {
-    const res = await axios.get(`/api/batches/${batchId}`);
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/batches/${batchId}`,
+    );
     return res.data as ClassBatchType;
   };
 

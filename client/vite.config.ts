@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tailwindcss()],
     server: {
       proxy: {
-        "/api": {
+        "${import.meta.env.VITE_API_BASE_URL}/api": {
           target: env.VITE_API_URL,
           changeOrigin: true,
           secure: false,

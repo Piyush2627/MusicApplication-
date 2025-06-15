@@ -20,12 +20,16 @@ function StudentsInformationPage() {
   const { studentsId } = useParams();
 
   const fetchStudent = async (): Promise<StudentsType> => {
-    const { data } = await axios.get(`/api/getStudent/${studentsId}`);
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/getStudent/${studentsId}`,
+    );
     return data;
   };
 
   const fetchAttendanceById = async (): Promise<AttendanceType[]> => {
-    const { data } = await axios.get(`/api/attendance/student/${studentsId}`);
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/attendance/student/${studentsId}`,
+    );
     return data;
   };
 

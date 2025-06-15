@@ -32,7 +32,9 @@ interface Enquiry {
 }
 
 const fetchEnquiries = async (): Promise<Enquiry[]> => {
-  const { data } = await axios.get("/api/enquiries");
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/enquiries`,
+  );
   return data;
 };
 
@@ -76,10 +78,13 @@ const EnquiryList: React.FC = () => {
       note: string;
       addedBy: string;
     }) => {
-      await axios.post(`/api/enquiries/${enquiryId}/remarks`, {
-        note,
-        addedBy,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/enquiries/${enquiryId}/remarks`,
+        {
+          note,
+          addedBy,
+        },
+      );
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["enquiries"] });

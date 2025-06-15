@@ -25,14 +25,19 @@ export const CreateBatchForm: React.FC = () => {
   const { data: students = [] } = useQuery<Student[]>({
     queryKey: ["students"],
     queryFn: async () => {
-      const res = await axios.get("/api/getAllStudent");
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+      );
       return res.data;
     },
   });
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async (newBatch: Batch) => {
-      const res = await axios.post("/api/batches", newBatch);
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
+        newBatch,
+      );
       return res.data;
     },
     onSuccess: () => {

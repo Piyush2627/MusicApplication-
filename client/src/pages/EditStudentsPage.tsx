@@ -25,7 +25,9 @@ const EditStudentPage = () => {
   } = useQuery<StudentsType>({
     queryKey: ["student", Id],
     queryFn: async () => {
-      const res = await axios.get(`/api/getStudent/${Id}`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/getStudent/${Id}`,
+      );
       return res.data;
     },
     enabled: !!Id,
@@ -82,7 +84,10 @@ const EditStudentPage = () => {
 
   const mutation = useMutation({
     mutationFn: async (updatedData: StudentsType) => {
-      return axios.put(`/api/updateStudent/${Id}`, updatedData);
+      return axios.put(
+        `${import.meta.env.VITE_API_BASE_URL}/api/updateStudent/${Id}`,
+        updatedData,
+      );
     },
     onSuccess: () => {
       notify();
