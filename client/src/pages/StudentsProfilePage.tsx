@@ -5,7 +5,9 @@ function StudentsProfilePage() {
   const { data } = useQuery<StudentsType[]>({
     queryKey: ["student"],
     queryFn: async () => {
-      const res = await axios.get("/api/getAllStudent");
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+      );
       return res.data;
     },
   });
