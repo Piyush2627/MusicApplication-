@@ -15,10 +15,7 @@ function LoginPage() {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/loginUser`,
-        isLoginInput,
-      );
+      const response = await axios.post(`/api/loginUser`, isLoginInput);
       return response.data;
     },
     onSuccess: (data) => {

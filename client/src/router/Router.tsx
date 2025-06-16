@@ -16,6 +16,7 @@ import StudentsInformationPage from "../pages/StudentsInformationPage";
 import EnquiryPage from "../pages/EnquiryPage";
 import EditStudentsPage from "../pages/EditStudentsPage";
 import EditBatch from "../pages/EditBatch";
+import StudentsProfilePage from "../pages/StudentsProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
                 element: <EditStudentsPage />,
               },
               { path: "/editBatch/:batchId", element: <EditBatch /> },
+              { path: "/profile", element: <StudentsProfilePage /> },
             ],
           },
           { path: "/update-image/:id", element: <UpdateImagePage /> },

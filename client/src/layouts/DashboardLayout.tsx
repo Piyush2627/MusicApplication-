@@ -40,7 +40,7 @@ function DashboardLayout() {
           <SidebarItem
             icon={<FaAddressCard />}
             text="Student Profiles"
-            link="/students/profiles"
+            link="/Profile"
           />
           <SidebarItem
             icon={<BsCardChecklist />}
