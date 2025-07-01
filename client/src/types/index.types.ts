@@ -6,7 +6,7 @@ export type UserType = {
 };
 
 export type StudentsType = {
-  StudentsStatus: any;
+  StudentsStatus: string;
   target: any;
   _id: string;
   studentName: string;
