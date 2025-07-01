@@ -47,12 +47,16 @@ const getMonthYear = (date: string | Date) => {
 
 // API
 const fetchStudent = async (id?: string): Promise<StudentsType> => {
-  const { data } = await axios.get(`/api/getStudent/${id}`);
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/getStudent/${id}`,
+  );
   return data;
 };
 
 const fetchAttendanceById = async (id?: string): Promise<AttendanceType[]> => {
-  const { data } = await axios.get(`/api/attendance/student/${id}`);
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/attendance/student/${id}`,
+  );
   return data;
 };
 

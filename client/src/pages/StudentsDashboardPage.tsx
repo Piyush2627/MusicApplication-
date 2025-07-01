@@ -14,12 +14,16 @@ import { FiSearch } from "react-icons/fi";
 import StudentsDataTable from "../components/common/StudentsDataTable";
 
 const fetchStudents = async (): Promise<StudentsType[]> => {
-  const { data } = await axios.get("/api/getAllStudent");
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+  );
   return data;
 };
 
 const fetchBatches = async (): Promise<ClassBatchType[]> => {
-  const { data } = await axios.get("/api/batches");
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
+  );
   return data;
 };
 
