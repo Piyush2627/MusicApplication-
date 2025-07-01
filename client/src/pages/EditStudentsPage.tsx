@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { type StudentsType } from "../types/index.types";
 import toast, { Toaster } from "react-hot-toast";
+import CustomInput from "../components/common/CustomInput";
 
 const EditStudentPage = () => {
   const { Id } = useParams<{ Id: string }>();
@@ -35,7 +36,6 @@ const EditStudentPage = () => {
 
   const [form, setForm] = useState<StudentsType>({
     _id: "",
-    StudentsStatus: "",
     studentName: "",
     studentsEmail: "",
     studentsMobileNumber: "0",
@@ -44,6 +44,7 @@ const EditStudentPage = () => {
     target: "",
     studentsJoiningDate: new Date(),
     studentsInstruments: "",
+    StudentsStatus: "",
     studentsProfile: "",
     studentsAddress: {
       country: "",
@@ -85,10 +86,7 @@ const EditStudentPage = () => {
 
   const mutation = useMutation({
     mutationFn: async (updatedData: StudentsType) => {
-      return axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/updateStudent/${Id}`,
-        updatedData,
-      );
+      return axios.put(`/api/updateStudent/${Id}`, updatedData);
     },
     onSuccess: () => {
       notify();
@@ -116,7 +114,7 @@ const EditStudentPage = () => {
   }
 
   return (
-    <div className="mx-auto mt-10 max-w-2xl rounded-xl bg-white p-8 shadow-lg ring-1 ring-gray-200">
+    <div className="bg-white p-8 shadow-lg ring-1 ring-gray-200">
       <Toaster />
       <h2 className="mb-6 text-center text-3xl font-semibold text-gray-800">
         Edit Student
@@ -128,11 +126,10 @@ const EditStudentPage = () => {
           <label className="mb-1 block text-sm font-medium text-gray-700">
             Name
           </label>
-          <input
+          <CustomInput
             name="studentName"
             value={form.studentName}
             onChange={handleChange}
-            className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             placeholder="Enter student name"
           />
         </div>
@@ -142,12 +139,11 @@ const EditStudentPage = () => {
           <label className="mb-1 block text-sm font-medium text-gray-700">
             Email
           </label>
-          <input
+          <CustomInput
             name="studentsEmail"
             type="email"
             value={form.studentsEmail}
             onChange={handleChange}
-            className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             placeholder="Enter email"
           />
         </div>
@@ -157,12 +153,11 @@ const EditStudentPage = () => {
           <label className="mb-1 block text-sm font-medium text-gray-700">
             Mobile Number
           </label>
-          <input
+          <CustomInput
             name="studentsMobileNumber"
             type="tel"
             value={form.studentsMobileNumber}
             onChange={handleChange}
-            className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             placeholder="Enter mobile number"
           />
         </div>
@@ -172,11 +167,10 @@ const EditStudentPage = () => {
           <label className="mb-1 block text-sm font-medium text-gray-700">
             Branch
           </label>
-          <input
+          <CustomInput
             name="studentsBranch"
             value={form.studentsBranch}
             onChange={handleChange}
-            className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             placeholder="Enter branch"
           />
         </div>
@@ -186,40 +180,53 @@ const EditStudentPage = () => {
           <label className="mb-1 block text-sm font-medium text-gray-700">
             Age
           </label>
-          <input
+          <CustomInput
             name="studentsAge"
             type="number"
             value={form.studentsAge}
             onChange={handleChange}
-            className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             placeholder="Enter age"
           />
         </div>
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">
-            Country
-          </label>
-          <select
-            name="studentsAddress.country"
-            value={form.studentsAddress.country}
-            onChange={handleChange}
-            className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
-          >
-            <option value="default">Select A Country</option>
-            <option value="India">India</option>
-            <option value="Australia">Australia</option>
-          </select>
+        <div className="flex">
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Country
+            </label>
+            <select
+              name="studentsAddress.country"
+              value={form.studentsAddress.country}
+              onChange={handleChange}
+            >
+              <option value="default">Select A Country</option>
+              <option value="India">India</option>
+              <option value="Australia">Australia</option>
+            </select>
+          </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700">
+              Student
+            </label>
+            <select
+              name="StudentsStatus"
+              value={form.StudentsStatus}
+              onChange={handleChange}
+            >
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+              <option value="Freezed">Freezed</option>
+            </select>
+          </div>
         </div>
         {/* City */}
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-700">
             City
           </label>
-          <input
+          <CustomInput
             name="studentsAddress.city"
             value={form.studentsAddress.city}
             onChange={handleChange}
-            className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             placeholder="Enter city"
           />
         </div>
@@ -229,11 +236,10 @@ const EditStudentPage = () => {
           <label className="mb-1 block text-sm font-medium text-gray-700">
             Street Address
           </label>
-          <input
+          <CustomInput
             name="studentsAddress.address"
             value={form.studentsAddress.address}
             onChange={handleChange}
-            className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
             placeholder="Enter street address"
           />
         </div>
