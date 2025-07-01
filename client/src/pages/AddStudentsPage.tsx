@@ -18,6 +18,7 @@ const defaultStudent: StudentsType = {
   studentsAddress: {
     address: "",
   },
+  StudentsStatus: undefined,
 };
 
 function AddStudentsPage() {

@@ -6,6 +6,7 @@ export type UserType = {
 };
 
 export type StudentsType = {
+  StudentsStatus: any;
   target: any;
   _id: string;
   studentName: string;
@@ -29,6 +30,7 @@ export type AttendanceStudentType = {
 };
 
 export type AttendanceType = {
+  _id: string;
   attendanceDate: Date;
   attendanceRemark?: string;
   attendanceOfClass: string;

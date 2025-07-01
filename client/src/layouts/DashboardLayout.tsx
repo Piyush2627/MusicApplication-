@@ -9,6 +9,7 @@ import {
   FaGuitar,
 } from "react-icons/fa";
 import { BsFillInboxesFill, BsCardChecklist } from "react-icons/bs";
+import TopNavBar from "../components/common/TopNavBar";
 function DashboardLayout() {
   return (
     <div className="flex h-screen bg-gray-100">
@@ -55,19 +56,20 @@ function DashboardLayout() {
           <SidebarItem
             icon={<FaGuitar />}
             text="Instruments"
-            link="/instruments"
+            link="/instrument"
           />
 
           <SidebarItem
             icon={<FaMoneyBillWave />}
             text="Billing & Payments"
-            link="/billing"
+            link="/payment"
           />
 
           <SidebarItem icon={<MdSettings />} text="Settings" link="/settings" />
         </Sidebar>
       </div>
       <div className="h-screen flex-1 overflow-y-auto">
+        <TopNavBar />
         <Outlet />
       </div>
     </div>
