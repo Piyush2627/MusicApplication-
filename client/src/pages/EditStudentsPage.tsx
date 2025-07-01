@@ -35,6 +35,7 @@ const EditStudentPage = () => {
 
   const [form, setForm] = useState<StudentsType>({
     _id: "",
+    StudentsStatus: "",
     studentName: "",
     studentsEmail: "",
     studentsMobileNumber: "0",
