@@ -86,7 +86,10 @@ const EditStudentPage = () => {
 
   const mutation = useMutation({
     mutationFn: async (updatedData: StudentsType) => {
-      return axios.put(`/api/updateStudent/${Id}`, updatedData);
+      return axios.put(
+        `${import.meta.env.VITE_API_BASE_URL}/api/updateStudent/${Id}`,
+        updatedData,
+      );
     },
     onSuccess: () => {
       notify();
