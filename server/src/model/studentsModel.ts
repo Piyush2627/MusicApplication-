@@ -32,6 +32,10 @@ const studentsSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  StudentsStatus: {
+    type: String,
+    default: "Active",
+  },
   studentsAddress: {
     country: {
       type: String,
