@@ -124,7 +124,6 @@ function EditBatch() {
     return <div>Loading ...</div>;
   }
 
-  // Filter existing vs non-existing students
   const selectedStudentIds = new Set(form.batchStudents.map((s) => s._id));
 
   const existingStudents = form.batchStudents.filter((student) =>

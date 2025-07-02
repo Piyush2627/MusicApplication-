@@ -1,14 +1,12 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import SignUp from "../pages/SignUp";
 import StudentsDashboardPage from "../pages/StudentsDashboardPage";
 import AddStudentsPage from "../pages/AddStudentsPage";
 import UpdateImagePage from "../pages/UpdateImagePage";
 import UserList from "../pages/UserList";
 import LoginPage from "../pages/LoginPage";
 import ProtectedRoute from "../utils/ProtectedRoute";
-import DashboardLayout from "../layouts/DashboardLayout";
 import HomePage from "../pages/HomePage";
 import AttendanceDashboard from "../pages/AttendanceDashboard";
 import BatchPage from "../pages/BatchPage";
@@ -18,52 +16,78 @@ import EditStudentsPage from "../pages/EditStudentsPage";
 import EditBatch from "../pages/EditBatch";
 import StudentsProfiles from "../pages/StudentsProfiles";
 import Instruments from "../components/Instruments";
+import AdminLayout from "../layouts/AdminLayout";
+import StudentLayout from "../layouts/StudentLayout";
+import SettingsPage from "../pages/SettingsPage";
+import AdminSignUpPage from "../pages/AdminSignUpPage";
+import StudentSignUpPage from "../pages/StudentSignUpPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
-      { path: "/home", element: <HomePage /> },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/signup", element: <SignUp /> },
-
+      { path: "", element: <HomePage /> },
+      { path: "login", element: <LoginPage /> },
+      { path: "signup", element: <StudentSignUpPage /> },
+      { path: "admin-signup", element: <AdminSignUpPage /> },
       {
-        element: <ProtectedRoute />,
+        element: <ProtectedRoute allowedRoles={["admin"]} />,
         children: [
           {
-            path: "/",
-            element: <DashboardLayout />,
+            path: "admin",
+            element: <AdminLayout />,
             children: [
-              { path: "/", element: <StudentsDashboardPage /> },
-              { path: "/add-students", element: <AddStudentsPage /> },
+              { path: "dashboard", element: <StudentsDashboardPage /> },
+              { path: "add-students", element: <AddStudentsPage /> },
               {
-                path: "/attendanceDashboard",
+                path: "attendanceDashboard",
                 element: <AttendanceDashboard />,
               },
-              { path: "/batch", element: <BatchPage /> },
-              { path: "/enquiry", element: <EnquiryPage /> },
-              { path: "/studentsProfiles", element: <StudentsProfiles /> },
+              { path: "batch", element: <BatchPage /> },
+              { path: "enquiry", element: <EnquiryPage /> },
+              { path: "studentsProfiles", element: <StudentsProfiles /> },
               {
-                path: "/studentsInfo/:studentsId",
+                path: "studentsInfo/:studentsId",
                 element: <StudentsInformationPage />,
               },
               {
-                path: "/editStudentInfoPage/:Id",
+                path: "editStudentInfoPage/:Id",
                 element: <EditStudentsPage />,
               },
-              { path: "/editBatch/:batchId", element: <EditBatch /> },
-              { path: "/instruments", element: <Instruments /> },
+              { path: "editBatch/:batchId", element: <EditBatch /> },
+              { path: "instruments", element: <Instruments /> },
+              { path: "user-list", element: <UserList /> },
+              { path: "settings", element: <SettingsPage /> },
             ],
           },
-          { path: "/update-image/:id", element: <UpdateImagePage /> },
-          { path: "/user-list", element: <UserList /> },
         ],
       },
-
+      {
+        element: <ProtectedRoute allowedRoles={["student"]} />,
+        children: [
+          {
+            path: "student",
+            element: <StudentLayout />,
+            children: [
+              { path: "dashboard", element: <StudentsDashboardPage /> },
+              { path: "profile", element: <StudentsProfiles /> },
+              { path: "settings", element: <SettingsPage /> },
+            ],
+          },
+        ],
+      },
+      {
+        path: "update-image/:id",
+        element: <UpdateImagePage />,
+      },
       {
         path: "*",
         element: <div>404 - Not Found</div>,
+      },
+      {
+        path: "unauthorized",
+        element: <div>401 - Unauthorized</div>,
       },
     ],
   },

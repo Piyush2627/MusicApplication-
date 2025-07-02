@@ -8,14 +8,16 @@ const defaultStudent: StudentsType = {
   _id: "",
   studentName: "",
   studentsEmail: "",
-  studentsMobileNumber: "0",
+  studentsMobileNumber: 0,
   studentsJoiningDate: new Date(),
-  studentsInstruments: "",
+  studentsInstruments: [],
   studentsBranch: "",
-  studentsAge: "0",
+  studentsAge: 0,
   studentsProfile: "",
   target: "",
   studentsAddress: {
+    country: "India",
+    city: "Pune",
     address: "",
   },
   StudentsStatus: "Active",
@@ -28,15 +30,31 @@ function AddStudentsPage() {
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
 
-    setIsStudentsInput((prev) => ({
-      ...prev,
-      [name]:
-        type === "number"
-          ? parseInt(value) || 0
-          : name === "studentsJoiningDate"
-            ? new Date(value)
-            : value,
-    }));
+    if (name === "studentsInstruments") {
+      setIsStudentsInput((prev) => ({
+        ...prev,
+        studentsInstruments: value.split(",").map((item) => item.trim()),
+      }));
+    } else if (name.startsWith("studentsAddress.")) {
+      const addressField = name.split(".")[1];
+      setIsStudentsInput((prev) => ({
+        ...prev,
+        studentsAddress: {
+          ...prev.studentsAddress,
+          [addressField]: value,
+        },
+      }));
+    } else {
+      setIsStudentsInput((prev) => ({
+        ...prev,
+        [name]:
+          type === "number"
+            ? parseInt(value) || 0
+            : name === "studentsJoiningDate"
+              ? new Date(value)
+              : value,
+      }));
+    }
   };
 
   const {
@@ -94,9 +112,9 @@ function AddStudentsPage() {
             onChange={handleOnChange}
           />
           <CustomInput
-            label="Instrument"
+            label="Instrument (comma-separated)"
             name="studentsInstruments"
-            value={isStudentInput.studentsInstruments}
+            value={isStudentInput.studentsInstruments.join(", ")}
             onChange={handleOnChange}
           />
           <CustomInput
@@ -110,6 +128,24 @@ function AddStudentsPage() {
             name="studentsAge"
             type="number"
             value={isStudentInput.studentsAge.toString()}
+            onChange={handleOnChange}
+          />
+          <CustomInput
+            label="Country"
+            name="studentsAddress.country"
+            value={isStudentInput.studentsAddress.country || ""}
+            onChange={handleOnChange}
+          />
+          <CustomInput
+            label="City"
+            name="studentsAddress.city"
+            value={isStudentInput.studentsAddress.city || ""}
+            onChange={handleOnChange}
+          />
+          <CustomInput
+            label="Address"
+            name="studentsAddress.address"
+            value={isStudentInput.studentsAddress.address || ""}
             onChange={handleOnChange}
           />
         </div>

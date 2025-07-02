@@ -10,62 +10,62 @@ import {
 } from "react-icons/fa";
 import { BsFillInboxesFill, BsCardChecklist } from "react-icons/bs";
 import TopNavBar from "../components/common/TopNavBar";
-function DashboardLayout() {
+function AdminLayout() {
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="h-screen flex-shrink-0 scroll-smooth bg-white shadow-lg">
         <Sidebar>
-          <SidebarItem icon={<MdSpaceDashboard />} text="Dashboard" link="/" />
+          <SidebarItem icon={<MdSpaceDashboard />} text="Dashboard" link="/admin/dashboard" />
 
           <SidebarItem
             icon={<MdPersonAddAlt1 />}
             text="Add Student"
-            link="/add-Students"
+            link="/admin/add-Students"
           />
           <SidebarItem
             icon={<FaAddressCard />}
             text="Enquiries"
-            link="/enquiry"
+            link="/admin/enquiry"
           />
 
           <SidebarItem
             icon={<BsFillInboxesFill />}
             text="Batches"
-            link="/batch"
+            link="/admin/batch"
           />
           <SidebarItem
             icon={<FaFingerprint />}
             text="Attendance"
-            link="/attendanceDashboard"
+            link="/admin/attendanceDashboard"
           />
           <SidebarItem
             icon={<FaAddressCard />}
             text="Student Profiles"
-            link="/Profile"
+            link="/admin/studentsProfiles"
           />
           <SidebarItem
             icon={<BsCardChecklist />}
             text="Assessments"
-            link="/assessments"
+            link="/admin/assessments"
           />
           <SidebarItem
             icon={<FaChalkboardTeacher />}
             text="Instructors"
-            link="/instructors"
+            link="/admin/instructors"
           />
           <SidebarItem
             icon={<FaGuitar />}
             text="Instruments"
-            link="/instrument"
+            link="/admin/instrument"
           />
 
           <SidebarItem
             icon={<FaMoneyBillWave />}
             text="Billing & Payments"
-            link="/payment"
+            link="/admin/payment"
           />
 
-          <SidebarItem icon={<MdSettings />} text="Settings" link="/settings" />
+          <SidebarItem icon={<MdSettings />} text="Settings" link="/admin/settings" />
         </Sidebar>
       </div>
       <div className="h-screen flex-1 overflow-y-auto">
@@ -76,4 +76,4 @@ function DashboardLayout() {
   );
 }
 
-export default DashboardLayout;
+export default AdminLayout;

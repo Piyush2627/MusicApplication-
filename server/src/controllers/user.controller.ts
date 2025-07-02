@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import asyncHandler from '../utils/asyncHandler'
 import { user } from '../model/userModel'
+import { students } from '../model/studentsModel'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
@@ -51,32 +52,41 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
   const isMatch = await bcrypt.compare(password, userData.password)
   if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' })
 
-  const token = jwt.sign({ email: userData.email }, 'this', {
+  const token = jwt.sign({ email: userData.email, role: userData.role }, 'this', {
     expiresIn: '1d',
   })
   res.json({
     token,
     isMatch: isMatch,
-    userData: { email, name: userData.userName },
+    userData: { email, name: userData.userName, role: userData.role },
   })
 })
 
 const signup = asyncHandler(async (req: Request, res: Response) => {
-  const { email, password, userName } = req.body
+  const { email, password, userName, role, ...studentDetails } = req.body
   const existingUser = await user.findOne({ email })
   if (existingUser)
     return res.status(400).json({ message: 'Email already registered' })
 
   const hashedPassword = await bcrypt.hash(password, 10)
+
+  let studentId
+  if (role === 'student') {
+    const newStudent = await students.create(studentDetails)
+    studentId = newStudent._id
+  }
+
   const userData = await user.create({
     email,
     password: hashedPassword,
     userName,
+    role,
+    studentId,
   })
 
   res.status(201).json({
     message: 'User registered successfully',
-    user: { id: userData._id, email, userName, password },
+    user: { id: userData._id, email, userName, role },
   })
 })
 

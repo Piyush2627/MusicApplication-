@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
 
 interface IUser extends mongoose.Document {
   userName: string
   password: string
   email?: string
+  role: 'admin' | 'student'
+  studentId?: mongoose.Schema.Types.ObjectId
 }
 const userSchema = new mongoose.Schema(
   {
@@ -18,6 +19,15 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'student'],
+      default: 'student',
+    },
+    studentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'student',
     },
   },
   { timestamps: true },

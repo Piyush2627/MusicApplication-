@@ -117,7 +117,7 @@ function StudentsDataTable({
                 </td>
                 <td className="px-6 py-4 text-right text-sm font-medium whitespace-nowrap">
                   <Link
-                    to={`/studentsInfo/${student._id}`}
+                    to={`/admin/studentsInfo/${student._id}`}
                     className="inline-flex items-center text-indigo-600 hover:text-indigo-800"
                   >
                     View <FiChevronRight className="ml-1 h-4 w-4" />

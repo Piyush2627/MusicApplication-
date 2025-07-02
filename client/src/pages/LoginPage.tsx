@@ -3,6 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import type { UserType } from "../types/index.types";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+
+interface DecodedToken {
+  role: string;
+  exp: number;
+}
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -24,7 +30,13 @@ function LoginPage() {
     onSuccess: (data) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
-        navigate("/"); // redirect to dashboard after successful login
+        const decodedToken = jwtDecode<DecodedToken>(data.token);
+        const userRole = decodedToken.role;
+        if (userRole === 'admin') {
+          navigate("/admin/dashboard");
+        } else if (userRole === 'student') {
+          navigate("/student/dashboard");
+        }
       } else {
         setError("No token received");
       }
@@ -112,7 +124,7 @@ function LoginPage() {
           <div className="mt-4 text-center text-sm text-gray-600">
             <p>
               Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-500 hover:underline">
+              <Link to="/student-signup" className="text-blue-500 hover:underline">
                 Sign up
               </Link>
             </p>

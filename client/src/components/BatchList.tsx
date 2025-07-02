@@ -39,7 +39,7 @@ function BatchList() {
             <h2 className="mb-2 text-xl font-semibold text-gray-800">
               {batch.batchName}
             </h2>
-            <Link to={`/editBatch/${batch._id}`}>
+            <Link to={`/admin/editBatch/${batch._id}`}>
               <div>
                 <IoSettings />
               </div>

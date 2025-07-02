@@ -11,11 +11,11 @@ export type StudentsType = {
   _id: string;
   studentName: string;
   studentsEmail: string;
-  studentsMobileNumber: string;
-  studentsInstruments: string;
+  studentsMobileNumber: number;
+  studentsInstruments: string[];
   studentsJoiningDate?: Date;
   studentsBranch: string;
-  studentsAge: string;
+  studentsAge: number;
   studentsProfile: string;
   studentsAddress: {
     country?: string;
