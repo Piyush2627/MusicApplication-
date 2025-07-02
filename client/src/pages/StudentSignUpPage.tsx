@@ -26,7 +26,9 @@ function StudentSignUpPage() {
     role: "student",
   });
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleOnChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setIsUserRegistration((prev) => ({
       ...prev,
@@ -47,6 +49,7 @@ function StudentSignUpPage() {
         `${import.meta.env.VITE_API_BASE_URL}/api/signup`,
         isUserRegistration,
       );
+      console.log(res);
       toast.success("Signup successful!");
       navigate("/login");
     } catch (error: any) {
@@ -55,9 +58,9 @@ function StudentSignUpPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
       <Toaster />
-      <div className="w-full max-w-lg p-8 space-y-6 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-lg space-y-6 rounded-lg bg-white p-8 shadow-md">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900">Student Sign Up</h1>
           <p className="mt-2 text-sm text-gray-600">
@@ -79,7 +82,7 @@ function StudentSignUpPage() {
               name="userName"
               value={isUserRegistration.userName}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -95,7 +98,7 @@ function StudentSignUpPage() {
               name="email"
               value={isUserRegistration.email}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -111,7 +114,7 @@ function StudentSignUpPage() {
               name="password"
               value={isUserRegistration.password}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -127,7 +130,7 @@ function StudentSignUpPage() {
               name="studentName"
               value={isUserRegistration.studentName || ""}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -143,7 +146,7 @@ function StudentSignUpPage() {
               name="studentsEmail"
               value={isUserRegistration.studentsEmail || ""}
               readOnly
-              className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-100 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -159,7 +162,7 @@ function StudentSignUpPage() {
               name="studentsMobileNumber"
               value={isUserRegistration.studentsMobileNumber || ""}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -175,7 +178,7 @@ function StudentSignUpPage() {
               name="studentsInstruments"
               value={isUserRegistration.studentsInstruments || ""}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -191,7 +194,7 @@ function StudentSignUpPage() {
               name="studentsBranch"
               value={isUserRegistration.studentsBranch || ""}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div>
@@ -207,7 +210,7 @@ function StudentSignUpPage() {
               name="studentsAge"
               value={isUserRegistration.studentsAge || ""}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
           <div className="md:col-span-2">
@@ -223,7 +226,7 @@ function StudentSignUpPage() {
               name="address"
               value={isUserRegistration.address || ""}
               onChange={handleOnChange}
-              className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
           </div>
         </div>
@@ -231,12 +234,12 @@ function StudentSignUpPage() {
         <div>
           <button
             onClick={registerUserOnclick}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
           >
             Sign Up
           </button>
         </div>
-        <div className="text-sm text-center">
+        <div className="text-center text-sm">
           <Link
             to="/login"
             className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -244,7 +247,7 @@ function StudentSignUpPage() {
             Already have an account?
           </Link>
         </div>
-        <div className="text-sm text-center mt-2">
+        <div className="mt-2 text-center text-sm">
           <Link
             to="/admin-signup"
             className="font-medium text-indigo-600 hover:text-indigo-500"
