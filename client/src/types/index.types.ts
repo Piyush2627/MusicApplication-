@@ -3,6 +3,8 @@ export type UserType = {
   userName: string;
   email: string;
   password: string;
+  role: string;
+  StudentsId?: StudentsType;
 };
 
 export type StudentsType = {

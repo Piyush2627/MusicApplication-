@@ -103,7 +103,10 @@ const StudentProfileCard = ({ student }: { student: StudentsType }) => (
           </div>
         </div>
       </div>
-      <Link to={`/editStudentInfoPage/${student._id}`} className="self-start">
+      <Link
+        to={`/admin/editStudentInfoPage/${student._id}`}
+        className="self-start"
+      >
         <button className="rounded-full bg-gray-100 p-3 text-gray-600 hover:bg-blue-100 hover:text-blue-600">
           <FaUserEdit size={20} />
         </button>

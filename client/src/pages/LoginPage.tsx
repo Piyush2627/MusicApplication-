@@ -32,9 +32,9 @@ function LoginPage() {
         localStorage.setItem("token", data.token);
         const decodedToken = jwtDecode<DecodedToken>(data.token);
         const userRole = decodedToken.role;
-        if (userRole === 'admin') {
+        if (userRole === "admin") {
           navigate("/admin/dashboard");
-        } else if (userRole === 'student') {
+        } else if (userRole === "student") {
           navigate("/student/dashboard");
         }
       } else {
@@ -124,7 +124,7 @@ function LoginPage() {
           <div className="mt-4 text-center text-sm text-gray-600">
             <p>
               Don't have an account?{" "}
-              <Link to="/student-signup" className="text-blue-500 hover:underline">
+              <Link to="/signup" className="text-blue-500 hover:underline">
                 Sign up
               </Link>
             </p>

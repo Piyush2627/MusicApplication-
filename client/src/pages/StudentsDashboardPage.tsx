@@ -58,21 +58,20 @@ function StudentsDashboardPage() {
 
     const citiesSet = new Set<string>();
     const filtered = students.filter((student) => {
-      const nameMatch = student.studentName
+      const name = student?.studentName ?? "";
+      const country = student?.studentsAddress?.country ?? "";
+      const city = student?.studentsAddress?.city ?? "";
+
+      const nameMatch = name
         .toLowerCase()
         .includes(studentSearch.toLowerCase());
-
       const countryMatch = selectedCountry
-        ? student.studentsAddress.country?.toLowerCase() ===
-          selectedCountry.toLowerCase()
+        ? country.toLowerCase() === selectedCountry.toLowerCase()
         : true;
-
       const cityMatch = selectedCity
-        ? student.studentsAddress.city?.toLowerCase() ===
-          selectedCity.toLowerCase()
+        ? city.toLowerCase() === selectedCity.toLowerCase()
         : true;
 
-      const city = student.studentsAddress.city;
       if (city) citiesSet.add(city);
 
       return nameMatch && countryMatch && cityMatch;

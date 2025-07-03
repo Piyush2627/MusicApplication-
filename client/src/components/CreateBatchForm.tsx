@@ -54,9 +54,10 @@ export const CreateBatchForm: React.FC = () => {
   const [batchBranch, setBatchBranch] = useState("");
 
   useEffect(() => {
-    const filtered = students.filter((student) =>
-      student.studentName.toLowerCase().includes(studentSearch.toLowerCase()),
-    );
+    const filtered = students.filter((student) => {
+      const name = student?.studentName ?? "";
+      return name.toLowerCase().includes(studentSearch.toLowerCase());
+    });
     setFilteredStudents(filtered);
   }, [studentSearch, students]);
 

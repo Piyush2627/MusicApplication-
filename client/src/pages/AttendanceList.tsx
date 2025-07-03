@@ -57,7 +57,7 @@ const getStatusStyle = (status: string) => {
 
 const formatDay = (dateStr: string) => {
   const date = new Date(dateStr);
-  return date.toLocaleString("default", { day: "numeric" });
+  return date.toLocaleString("default", { day: "numeric", month: "short" });
 };
 
 const formatFullDate = (dateStr: string) => {
@@ -171,6 +171,7 @@ const AttendanceDashboard: React.FC = () => {
                           <div className="text-md font-semibold text-gray-800">
                             {formatDay(record.attendanceDate)}
                           </div>
+                          <div>{record.attendanceRemark}</div>
                           <div className="text-xs text-gray-500">
                             {getSummaryIcon(record)} Attendance
                           </div>

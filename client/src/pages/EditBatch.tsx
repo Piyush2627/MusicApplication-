@@ -127,14 +127,18 @@ function EditBatch() {
   const selectedStudentIds = new Set(form.batchStudents.map((s) => s._id));
 
   const existingStudents = form.batchStudents.filter((student) =>
-    student.studentName.toLowerCase().includes(searchTerm.toLowerCase()),
+    (student.studentName ?? "")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()),
   );
 
   const availableStudents =
     studentData?.filter(
       (student) =>
         !selectedStudentIds.has(student._id) &&
-        student.studentName.toLowerCase().includes(searchTerm.toLowerCase()),
+        (student.studentName ?? "")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()),
     ) || [];
 
   return (

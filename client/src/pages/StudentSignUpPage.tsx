@@ -2,6 +2,7 @@ import { useState, type ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import type { UserType } from "../types/index.types";
 
 type FormData = {
   userName: string;
@@ -19,7 +20,7 @@ type FormData = {
 
 function StudentSignUpPage() {
   const navigate = useNavigate();
-  const [isUserRegistration, setIsUserRegistration] = useState<FormData>({
+  const [isUserRegistration, setIsUserRegistration] = useState<UserType>({
     userName: "",
     email: "",
     password: "",
@@ -128,7 +129,7 @@ function StudentSignUpPage() {
               type="text"
               id="studentName"
               name="studentName"
-              value={isUserRegistration.studentName || ""}
+              value={isUserRegistration.StudentsId?.studentName || ""}
               onChange={handleOnChange}
               className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
@@ -144,7 +145,7 @@ function StudentSignUpPage() {
               type="email"
               id="studentsEmail"
               name="studentsEmail"
-              value={isUserRegistration.studentsEmail || ""}
+              value={isUserRegistration.StudentsId?.studentsEmail || ""}
               readOnly
               className="mt-1 block w-full rounded-md border border-gray-300 bg-gray-100 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
@@ -160,7 +161,7 @@ function StudentSignUpPage() {
               type="text"
               id="studentsMobileNumber"
               name="studentsMobileNumber"
-              value={isUserRegistration.studentsMobileNumber || ""}
+              value={isUserRegistration.StudentsId?.studentsMobileNumber || ""}
               onChange={handleOnChange}
               className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
@@ -176,7 +177,7 @@ function StudentSignUpPage() {
               type="text"
               id="studentsInstruments"
               name="studentsInstruments"
-              value={isUserRegistration.studentsInstruments || ""}
+              value={isUserRegistration.StudentsId?.studentsInstruments || ""}
               onChange={handleOnChange}
               className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
@@ -192,7 +193,7 @@ function StudentSignUpPage() {
               type="text"
               id="studentsBranch"
               name="studentsBranch"
-              value={isUserRegistration.studentsBranch || ""}
+              value={isUserRegistration.StudentsId?.studentsBranch || ""}
               onChange={handleOnChange}
               className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
@@ -208,7 +209,7 @@ function StudentSignUpPage() {
               type="number"
               id="studentsAge"
               name="studentsAge"
-              value={isUserRegistration.studentsAge || ""}
+              value={isUserRegistration.StudentsId?.studentsAge || ""}
               onChange={handleOnChange}
               className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
@@ -224,7 +225,9 @@ function StudentSignUpPage() {
               type="text"
               id="address"
               name="address"
-              value={isUserRegistration.address || ""}
+              value={
+                isUserRegistration.StudentsId?.studentsAddress.address || ""
+              }
               onChange={handleOnChange}
               className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
