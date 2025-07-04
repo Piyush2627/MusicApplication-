@@ -4,20 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import type { UserType } from "../types/index.types";
 
-type FormData = {
-  userName: string;
-  email: string;
-  password: string;
-  role: string;
-  studentName?: string;
-  studentsEmail?: string;
-  studentsMobileNumber?: string;
-  studentsInstruments?: string[];
-  studentsBranch?: string;
-  studentsAge?: number;
-  address?: string;
-};
-
 function StudentSignUpPage() {
   const navigate = useNavigate();
   const [isUserRegistration, setIsUserRegistration] = useState<UserType>({

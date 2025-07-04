@@ -16,6 +16,7 @@ function LoginPage() {
     email: "",
     password: "",
     userName: "demo",
+    role: "",
   });
   const [error, setError] = useState("");
 
