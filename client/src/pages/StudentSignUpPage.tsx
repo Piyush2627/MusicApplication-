@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import type { UserType, StudentsType } from "../types/index.types";
+import type { UserType } from "../types/index.types";
 
 function StudentSignUpPage() {
   const navigate = useNavigate();
