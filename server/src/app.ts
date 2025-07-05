@@ -1,6 +1,9 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 import UserRoutes from "./router/user.routes";
 import StudentRoutes from "./router/students.routes";
@@ -13,8 +16,8 @@ import Payment from "./router/payment.routes";
 const app: Application = express();
 
 const allowedOrigins = [
-  "http://localhost:5173", // local dev (Vite)
-  "https://music-application-mu.vercel.app", // your Vercel frontend
+  "http://localhost:5173",
+  "https://music-application-mu.vercel.app",
 ];
 app.use(
   cors({
@@ -25,7 +28,7 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true, // if you're using cookies/auth headers
+    credentials: true,
   })
 );
 app.use(helmet());

@@ -1,91 +1,149 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import CustomInput from "../components/common/CustomInput";
-import type { StudentsType } from "../types/index.types";
-
-const defaultStudent: StudentsType = {
-  _id: "",
-  studentName: "",
-  studentsEmail: "",
-  studentsMobileNumber: 0,
-  studentsJoiningDate: new Date(),
-  studentsInstruments: [],
-  studentsBranch: "",
-  studentsAge: 0,
-  studentsProfile: "",
-  target: "",
-  studentsAddress: {
-    country: "India",
-    city: "Pune",
-    address: "",
-  },
-  StudentsStatus: "Active",
-};
+import toast, { Toaster } from "react-hot-toast";
 
 function AddStudentsPage() {
-  const [isStudentInput, setIsStudentsInput] =
-    useState<StudentsType>(defaultStudent);
+  const [form, setForm] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    role: "student",
+    StudentsId: {
+      studentName: "",
+      studentsEmail: "",
+      studentsMobileNumber: "",
+      studentsInstruments: "",
+      studentsBranch: "",
+      studentsAge: "",
+      studentsProfile: "",
+      studentsJoiningDate: new Date(),
+      StudentsStatus: "Active",
+      studentsAddress: {
+        country: "India",
+        city: "Pune",
+        address: "",
+      },
+    },
+  });
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type } = e.target;
+  const handleOnChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
 
-    if (name === "studentsInstruments") {
-      setIsStudentsInput((prev) => ({
+    if (
+      [
+        "studentsMobileNumber",
+        "studentsInstruments",
+        "studentsBranch",
+        "studentsAge",
+      ].includes(name)
+    ) {
+      setForm((prev) => ({
         ...prev,
-        studentsInstruments: value.split(",").map((item) => item.trim()),
+        StudentsId: {
+          ...prev.StudentsId,
+          [name]: value,
+        },
       }));
-    } else if (name.startsWith("studentsAddress.")) {
-      const addressField = name.split(".")[1];
-      setIsStudentsInput((prev) => ({
+    } else if (["city", "address"].includes(name)) {
+      setForm((prev) => ({
         ...prev,
-        studentsAddress: {
-          ...prev.studentsAddress,
-          [addressField]: value,
+        StudentsId: {
+          ...prev.StudentsId,
+          studentsAddress: {
+            ...prev.StudentsId.studentsAddress,
+            [name]: value,
+          },
+        },
+      }));
+    } else if (name === "userName") {
+      setForm((prev) => ({
+        ...prev,
+        userName: value,
+        StudentsId: {
+          ...prev.StudentsId,
+          studentName: value,
         },
       }));
     } else {
-      setIsStudentsInput((prev) => ({
+      setForm((prev) => ({
         ...prev,
-        [name]:
-          type === "number"
-            ? parseInt(value) || 0
-            : name === "studentsJoiningDate"
-              ? new Date(value)
-              : value,
+        [name]: value,
       }));
     }
   };
 
-  const {
-    mutate: addStudent,
-    isPending,
-    isSuccess,
-    isError,
-    error,
-  } = useMutation({
-    mutationFn: async (newStudent: StudentsType) => {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/createStudent`,
-        newStudent,
+  // Sync studentsEmail with email
+  useEffect(() => {
+    setForm((prev) => ({
+      ...prev,
+      StudentsId: {
+        ...prev.StudentsId,
+        studentsEmail: prev.email,
+      },
+    }));
+  }, [form.email]);
+
+  const { mutate: addUserAndStudent, isPending } = useMutation({
+    mutationFn: async () => {
+      const preparedData = {
+        ...form,
+        StudentsId: {
+          ...form.StudentsId,
+          studentsMobileNumber: Number(form.StudentsId.studentsMobileNumber),
+          studentsAge: Number(form.StudentsId.studentsAge),
+          studentsInstruments: form.StudentsId.studentsInstruments
+            ? form.StudentsId.studentsInstruments
+                .split(",")
+                .map((i) => i.trim())
+            : [],
+        },
+      };
+
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/signup`,
+        preparedData,
       );
-      return response.data;
+
+      return res.data;
     },
     onSuccess: () => {
-      alert("Student added successfully");
-      setIsStudentsInput(defaultStudent);
+      toast.success("Student and user added successfully");
+      setForm({
+        userName: "",
+        email: "",
+        password: "",
+        role: "student",
+        StudentsId: {
+          studentName: "",
+          studentsEmail: "",
+          studentsMobileNumber: "",
+          studentsInstruments: "",
+          studentsBranch: "",
+          studentsAge: "",
+          studentsProfile: "",
+          studentsJoiningDate: new Date(),
+          StudentsStatus: "Active",
+          studentsAddress: {
+            country: "India",
+            city: "Pune",
+            address: "",
+          },
+        },
+      });
     },
-    onError: (err) => {
+    onError: (err: any) => {
+      toast.error(err?.response?.data?.message || "Failed to add student.");
       console.error("Error adding student:", err);
     },
   });
 
-  const AddStudentsData = () => {
-    addStudent(isStudentInput);
-  };
-
   return (
     <div className="w-full p-6">
+      <Toaster position="top-right" />
       <div className="w-full rounded-xl border border-gray-200 bg-white p-6 shadow-md">
         <h2 className="mb-6 text-3xl font-bold text-gray-800">
           Add New Student
@@ -93,82 +151,78 @@ function AddStudentsPage() {
 
         <div className="space-y-4">
           <CustomInput
-            label="Student Name"
-            name="studentName"
-            value={isStudentInput.studentName}
+            label="Name"
+            name="userName"
+            value={form.userName}
             onChange={handleOnChange}
           />
           <CustomInput
             label="Email"
-            name="studentsEmail"
-            value={isStudentInput.studentsEmail}
+            name="email"
+            value={form.email}
+            onChange={handleOnChange}
+          />
+          <CustomInput
+            label="Password"
+            name="password"
+            type="password"
+            value={form.password}
             onChange={handleOnChange}
           />
           <CustomInput
             label="Mobile Number"
             name="studentsMobileNumber"
             type="number"
-            value={isStudentInput.studentsMobileNumber.toString()}
+            value={form.StudentsId.studentsMobileNumber}
             onChange={handleOnChange}
           />
           <CustomInput
             label="Instrument (comma-separated)"
             name="studentsInstruments"
-            value={isStudentInput.studentsInstruments.join(", ")}
+            value={form.StudentsId.studentsInstruments}
             onChange={handleOnChange}
           />
           <CustomInput
             label="Branch"
             name="studentsBranch"
-            value={isStudentInput.studentsBranch}
+            value={form.StudentsId.studentsBranch}
             onChange={handleOnChange}
           />
           <CustomInput
             label="Age"
             name="studentsAge"
             type="number"
-            value={isStudentInput.studentsAge.toString()}
+            value={form.StudentsId.studentsAge}
             onChange={handleOnChange}
           />
           <CustomInput
             label="Country"
-            name="studentsAddress.country"
-            value={isStudentInput.studentsAddress.country || ""}
+            name="country"
+            value={form.StudentsId.studentsAddress.country}
             onChange={handleOnChange}
           />
           <CustomInput
             label="City"
-            name="studentsAddress.city"
-            value={isStudentInput.studentsAddress.city || ""}
+            name="city"
+            value={form.StudentsId.studentsAddress.city}
             onChange={handleOnChange}
           />
           <CustomInput
             label="Address"
-            name="studentsAddress.address"
-            value={isStudentInput.studentsAddress.address || ""}
+            name="address"
+            value={form.StudentsId.studentsAddress.address}
             onChange={handleOnChange}
           />
         </div>
 
         <div className="mt-6">
           <button
-            onClick={AddStudentsData}
+            onClick={() => addUserAndStudent()}
             className="w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isPending}
           >
             {isPending ? "Adding..." : "Add Student"}
           </button>
-
-          {isSuccess && (
-            <p className="mt-3 text-sm font-medium text-green-600">
-              Student added!
-            </p>
-          )}
-          {isError && (
-            <p className="mt-3 text-sm font-medium text-red-600">
-              Failed to add student: {(error as Error).message}
-            </p>
-          )}
         </div>
       </div>
     </div>
