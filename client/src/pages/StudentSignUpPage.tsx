@@ -2,7 +2,7 @@ import { useState, type ChangeEvent, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import type { UserType } from "../types/index.types";
+import type { UserType, StudentsType } from "../types/index.types";
 
 function StudentSignUpPage() {
   const navigate = useNavigate();
@@ -11,6 +11,24 @@ function StudentSignUpPage() {
     email: "",
     password: "",
     role: "student",
+    StudentsId: {
+      _id: "",
+      studentName: "",
+      studentsEmail: "",
+      studentsMobileNumber: 0,
+      studentsJoiningDate: new Date(),
+      studentsInstruments: [],
+      studentsBranch: "",
+      studentsAge: 0,
+      studentsProfile: "",
+      target: "",
+      studentsAddress: {
+        country: "India",
+        city: "Pune",
+        address: "",
+      },
+      StudentsStatus: "Active",
+    },
   });
 
   const handleOnChange = (
@@ -199,6 +217,60 @@ function StudentSignUpPage() {
               onChange={handleOnChange}
               className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             />
+          </div>
+          <div className="md:col-span-2">
+            <label
+              htmlFor="city"
+              className="block text-sm font-medium text-gray-700"
+            >
+              City
+            </label>
+            <select
+              id="city"
+              name="StudentsId.studentsAddress.city"
+              value={isUserRegistration?.StudentsId?.studentsAddress.city}
+              onChange={handleOnChange}
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
+            >
+              <option value="Pune">Pune</option>
+              <option value="Dhule">Dhule</option>
+              <option value="Shirpur">Shirpur</option>
+              <option value="Arthe Shirpur">Arthe Shirpur</option>
+            </select>
+          </div>
+          <div className="md:col-span-2">
+            <label
+              htmlFor="City"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Residence
+            </label>
+            <select
+              id="Branch"
+              name="StudentsId.studentsBranch"
+              value={isUserRegistration?.StudentsId?.studentsBranch}
+              onChange={handleOnChange}
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
+            >
+              <option value="">Select Residence</option>
+              <option value="7PD">7PD</option>
+              <option value="VTP Hi-life">VTP Hi-life</option>
+              <option value="Rose-e-Meher">Rose-e-Meher</option>
+              <option value="Signature park">Signature park</option>
+              <option value="Shivangan">Shivangan</option>
+              <option value="Sai Vista">Sai Vista</option>
+              <option value="Lodha Blemendo Gahunje">
+                Lodha Blemendo Gahunje
+              </option>
+              <option value="Kunal iconia Kiwle">Kunal iconia Kiwle</option>
+              <option value="Godrej Kiwle">Godrej Kiwle</option>
+              <option value="Kolthe patil Kiwle">Kolthe patil Kiwle</option>
+              <option value="Range Hill Jr Staff club">
+                Range Hill Jr Staff club
+              </option>
+              <option value="IDSE Office Khadki">IDSE Office Khadki</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
           <div className="md:col-span-2">
             <label
