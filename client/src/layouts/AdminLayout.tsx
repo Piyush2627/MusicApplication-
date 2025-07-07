@@ -9,13 +9,16 @@ import {
   FaGuitar,
 } from "react-icons/fa";
 import { BsFillInboxesFill, BsCardChecklist } from "react-icons/bs";
-import TopNavBar from "../components/common/TopNavBar";
 function AdminLayout() {
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="h-screen flex-shrink-0 scroll-smooth bg-white shadow-lg">
+    <div className="flex h-screen">
+      <div className="h-screen flex-shrink-0 scroll-smooth">
         <Sidebar>
-          <SidebarItem icon={<MdSpaceDashboard />} text="Dashboard" link="/admin/dashboard" />
+          <SidebarItem
+            icon={<MdSpaceDashboard />}
+            text="Dashboard"
+            link="/admin/dashboard"
+          />
 
           <SidebarItem
             icon={<MdPersonAddAlt1 />}
@@ -65,11 +68,14 @@ function AdminLayout() {
             link="/admin/payment"
           />
 
-          <SidebarItem icon={<MdSettings />} text="Settings" link="/admin/settings" />
+          <SidebarItem
+            icon={<MdSettings />}
+            text="Settings"
+            link="/admin/settings"
+          />
         </Sidebar>
       </div>
       <div className="h-screen flex-1 overflow-y-auto">
-        <TopNavBar />
         <Outlet />
       </div>
     </div>

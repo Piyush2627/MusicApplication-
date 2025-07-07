@@ -1,14 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState, type ChangeEvent } from "react";
-import {
-  FiCalendar,
-  FiTag,
-  FiUsers,
-  FiSearch,
-  FiPlus,
-  FiX,
-} from "react-icons/fi";
+import { FiCalendar, FiTag, FiUsers, FiSearch } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { type ClassBatchType, type StudentsType } from "../types/index.types";
 
@@ -23,6 +16,7 @@ function AddAttendanceForm() {
   }>({});
   const [searchQuery, setSearchQuery] = useState("");
   const [addedStudents, setAddedStudents] = useState<StudentsType[]>([]);
+  const [selectedInstrument, setSelectedInstrument] = useState("");
 
   const queryClient = useQueryClient();
 
@@ -40,11 +34,7 @@ function AddAttendanceForm() {
     return res.data;
   };
 
-  const {
-    data: ClassBatchResData,
-    isLoading,
-    isError,
-  } = useQuery<ClassBatchType[]>({
+  const { data: ClassBatchResData } = useQuery<ClassBatchType[]>({
     queryKey: ["classBatch"],
     queryFn: fetchClassBatch,
   });
@@ -137,7 +127,7 @@ function AddAttendanceForm() {
 
   const handleSubmitAttendance = () => {
     if (!selectedBatch) {
-      toast.error("Please select a batch.");
+      toast.error("Please select a batch to submit attendance.");
       return;
     }
     if (Object.keys(attendanceStatusMap).length === 0) {
@@ -162,190 +152,261 @@ function AddAttendanceForm() {
     attendanceMutation.mutate(payload);
   };
 
+  const getTitle = () => {
+    if (selectedBatch) {
+      return `Students in ${selectedBatch.batchName}`;
+    }
+    if (selectedInstrument) {
+      return `Students for ${selectedInstrument}`;
+    }
+    return 'Students';
+  };
+
+  const studentList = (
+    selectedBatch
+      ? selectedBatch.batchStudents
+      : allStudents.filter(
+          (student) =>
+            student.StudentsStatus === "Active" &&
+            (!selectedInstrument ||
+              student.studentsInstruments.includes(selectedInstrument)),
+        )
+  ).filter((student) =>
+    student.studentName.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  const searchResults = allStudents.filter(
+    (student) =>
+      student.StudentsStatus === "Active" &&
+      student.studentName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !studentList.some((s) => s._id === student._id) &&
+      !addedStudents.some((s) => s._id === student._id),
+  );
+
   return (
-    <div className="rounded-xl bg-white p-6 shadow-lg sm:p-8">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Mark Attendance</h2>
-        <p className="mt-1 text-sm text-gray-500">
-          Select a date and batch to begin.
-        </p>
-      </div>
-
-      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div>
-          <label
-            htmlFor="attendanceDate"
-            className="mb-2 flex items-center text-sm font-medium text-gray-600"
-          >
-            <FiCalendar className="mr-2" /> Date
-          </label>
-          <input
-            type="date"
-            id="attendanceDate"
-            name="attendanceDate"
-            className="block w-full rounded-md border-gray-300 bg-gray-50 px-3 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            value={attendanceDate}
-            onChange={(e) => setAttendanceDate(e.target.value)}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="classBatch"
-            className="mb-2 flex items-center text-sm font-medium text-gray-600"
-          >
-            <FiUsers className="mr-2" /> Class Batch
-          </label>
-          {isLoading ? (
-            <div className="h-10 w-full animate-pulse rounded-md bg-gray-200"></div>
-          ) : isError ? (
-            <p className="text-red-500">Error loading batches.</p>
-          ) : (
-            <select
-              id="classBatch"
-              className="block w-full rounded-md border-gray-300 bg-gray-50 px-3 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              value={selectedBatch?._id || ""}
-              onChange={handleBatchChange}
-            >
-              <option value="">Select a batch...</option>
-              {ClassBatchResData?.map((ele) => (
-                <option key={ele._id} value={ele._id}>
-                  {ele.batchName} ({ele.batchBranch})
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
-
-        <div className="md:col-span-2">
-          <label
-            htmlFor="attendanceRemark"
-            className="mb-2 flex items-center text-sm font-medium text-gray-600"
-          >
-            <FiTag className="mr-2" /> Remark (Optional)
-          </label>
-          <input
-            type="text"
-            id="attendanceRemark"
-            name="attendanceRemark"
-            placeholder="e.g., Special holiday class"
-            className="block w-full rounded-md border-gray-300 bg-gray-50 px-3 py-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            value={attendanceRemark}
-            onChange={(e) => setAttendanceRemark(e.target.value)}
-          />
-        </div>
-
-        <div className="md:col-span-2">
-          <label
-            htmlFor="addStudent"
-            className="mb-2 flex items-center text-sm font-medium text-gray-600"
-          >
-            <FiPlus className="mr-2" /> Add Extra Student
-          </label>
-          <div className="relative">
-            <input
-              type="text"
-              id="addStudent"
-              placeholder="Search student by name..."
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 pl-10"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <FiSearch className="absolute top-1/2 left-3 -translate-y-1/2 text-gray-400" />
+    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="mx-auto max-w-4xl">
+        <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6">
+            <h2 className="text-3xl font-bold tracking-tight text-white">
+              Mark Attendance
+            </h2>
+            <p className="mt-2 text-indigo-100">
+              Select an instrument and date to mark student attendance.
+            </p>
           </div>
-          {searchQuery && (
-            <ul className="mt-2 max-h-40 overflow-auto rounded-md border bg-white shadow">
-              {allStudents
-                .filter(
-                  (student) =>
-                    student.studentName
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase()) &&
-                    !selectedBatch?.batchStudents.some(
-                      (s) => s._id === student._id,
-                    ) &&
-                    !addedStudents.some((s) => s._id === student._id),
-                )
-                .slice(0, 5)
-                .map((student) => (
-                  <li
-                    key={student._id}
-                    className="flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-gray-100"
-                    onClick={() => {
-                      handleAddStudent(student);
-                      setSearchQuery("");
-                    }}
-                  >
-                    {student.studentName}
-                    <FiPlus className="text-green-500" />
-                  </li>
-                ))}
-            </ul>
-          )}
-        </div>
-      </div>
 
-      {selectedBatch && (
-        <div>
-          <h3 className="mb-4 flex items-center border-b pb-2 text-lg font-semibold text-gray-700">
-            <FiUsers className="mr-2" /> Students in {selectedBatch.batchName}
-          </h3>
-          <ul className="space-y-3">
-            {[...selectedBatch.batchStudents, ...addedStudents].map(
-              (student) => (
-                <li
-                  key={student._id}
-                  className="flex flex-wrap items-center justify-between gap-4 rounded-lg bg-gray-50 p-3"
+          <div className="p-6 sm:p-8">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+              {/* Batch Selector */}
+              <div>
+                <label
+                  htmlFor="batch"
+                  className="flex items-center text-sm leading-6 font-semibold text-gray-900"
                 >
-                  <span className="font-medium text-gray-800">
-                    {student.studentName}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {(["Present", "Late", "Absent"] as const).map((status) => (
-                      <button
-                        key={status}
-                        onClick={() => handleStatusChange(student._id, status)}
-                        className={`rounded-full px-3 py-1 text-xs font-semibold transition-all duration-200 ${
-                          attendanceStatusMap[student._id] === status
-                            ? {
-                                Present: "bg-emerald-500 text-white shadow",
-                                Late: "bg-amber-500 text-white shadow",
-                                Absent: "bg-red-500 text-white shadow",
-                              }[status]
-                            : "bg-gray-200 text-gray-600 hover:bg-gray-300"
-                        }`}
-                      >
-                        {status}
-                      </button>
+                  <FiUsers className="mr-2 h-5 w-5 text-indigo-600" />
+                  Batch
+                </label>
+                <div className="mt-2.5">
+                  <select
+                    id="batch"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
+                    value={selectedBatch?._id || ""}
+                    onChange={handleBatchChange}
+                  >
+                    <option value="">Select a batch</option>
+                    {ClassBatchResData?.map((batch) => (
+                      <option key={batch._id} value={batch._id}>
+                        {batch.batchName}
+                      </option>
                     ))}
-                    {addedStudents.some((s) => s._id === student._id) && (
-                      <button
-                        onClick={() => handleRemoveAddedStudent(student._id)}
-                        className="ml-2 text-red-500 hover:text-red-700"
-                        title="Remove student"
-                      >
-                        <FiX size={18} />
-                      </button>
-                    )}
-                  </div>
-                </li>
-              ),
-            )}
-          </ul>
+                  </select>
+                </div>
+              </div>
 
-          <div className="mt-8 border-t border-gray-200 pt-6">
-            <button
-              className="flex w-full items-center justify-center rounded-md bg-indigo-600 px-4 py-3 text-base font-semibold text-white shadow-sm transition-all hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-400"
-              onClick={handleSubmitAttendance}
-              disabled={attendanceMutation.isPending}
-            >
-              {attendanceMutation.isPending
-                ? "Submitting..."
-                : "Submit Attendance"}
-            </button>
+              {/* Instrument Selector */}
+              <div>
+                <label
+                  htmlFor="instrument"
+                  className="flex items-center text-sm leading-6 font-semibold text-gray-900"
+                >
+                  <FiTag className="mr-2 h-5 w-5 text-indigo-600" />
+                  Instrument
+                </label>
+                <div className="mt-2.5">
+                  <select
+                    id="instrument"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
+                    value={selectedInstrument}
+                    onChange={(e) => setSelectedInstrument(e.target.value)}
+                  >
+                    <option value="">Select Instrument</option>
+                    {[
+                      ...new Set(
+                        allStudents.flatMap((s) => s.studentsInstruments),
+                      ),
+                    ].map((instrument) => (
+                      <option key={instrument} value={instrument}>
+                        {instrument}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Date Picker */}
+              <div>
+                <label
+                  htmlFor="attendanceDate"
+                  className="flex items-center text-sm leading-6 font-semibold text-gray-900"
+                >
+                  <FiCalendar className="mr-2 h-5 w-5 text-indigo-600" />
+                  Date
+                </label>
+                <div className="mt-2.5">
+                  <input
+                    type="date"
+                    id="attendanceDate"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
+                    value={attendanceDate}
+                    onChange={(e) => setAttendanceDate(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Search Input */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="search"
+                  className="flex items-center text-sm leading-6 font-semibold text-gray-900"
+                >
+                  <FiSearch className="mr-2 h-5 w-5 text-indigo-600" />
+                  Search Student
+                </label>
+                <div className="mt-2.5">
+                  <input
+                    type="text"
+                    id="search"
+                    placeholder="Search by name..."
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  {searchQuery && (
+                    <ul className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      {searchResults.slice(0, 5).map((student) => (
+                        <li
+                          key={student._id}
+                          className="relative cursor-default select-none py-2 px-3 text-gray-900 hover:bg-indigo-600 hover:text-white"
+                          onClick={() => handleAddStudent(student)}
+                        >
+                          {student.studentName}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+
+              {/* Remark Input */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="attendanceRemark"
+                  className="flex items-center text-sm font-semibold leading-6 text-gray-900"
+                >
+                  <FiTag className="mr-2 h-5 w-5 text-indigo-600" />
+                  Remark (Optional)
+                </label>
+                <div className="mt-2.5">
+                  <input
+                    type="text"
+                    id="attendanceRemark"
+                    placeholder="e.g., Special holiday class"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={attendanceRemark}
+                    onChange={(e) => setAttendanceRemark(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Student List */}
+            {(selectedBatch || selectedInstrument) && (
+              <div className="mt-8">
+                <div className="border-b border-gray-200 pb-4">
+                  <h3 className="flex items-center text-xl font-semibold text-gray-900">
+                    <FiUsers className="mr-3 h-6 w-6 text-indigo-600" />
+                    {getTitle()}
+                  </h3>
+                  <p className="mt-1 text-sm text-gray-500">
+                    Mark the attendance status for each student.
+                  </p>
+                </div>
+                <ul className="mt-6 space-y-4">
+                  {[...studentList, ...addedStudents].map((student) => (
+                    <li
+                      key={student._id}
+                      className="transform rounded-xl border border-gray-200 bg-white p-4 transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-md"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-4">
+                        <span className="text-lg font-medium text-gray-800">
+                          {student.studentName}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          {(["Present", "Late", "Absent"] as const).map(
+                            (status) => (
+                              <button
+                                key={status}
+                                onClick={() =>
+                                  handleStatusChange(student._id, status)
+                                }
+                                className={`rounded-full px-4 py-1.5 text-sm font-semibold transition-all duration-200 ${
+                                  attendanceStatusMap[student._id] === status
+                                    ? {
+                                        Present:
+                                          "bg-emerald-500 text-white shadow-md",
+                                        Late: "bg-amber-500 text-white shadow-md",
+                                        Absent:
+                                          "bg-red-500 text-white shadow-md",
+                                      }[status]
+                                    : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                                }`}
+                              >
+                                {status}
+                              </button>
+                            ),
+                          )}
+                          {addedStudents.some((s) => s._id === student._id) && (
+                            <button
+                              onClick={() => handleRemoveAddedStudent(student._id)}
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              Remove
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Submit Button */}
+                <div className="mt-10 border-t border-gray-200 pt-6">
+                  <button
+                    className="w-full rounded-lg bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-all duration-300 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+                    onClick={handleSubmitAttendance}
+                    disabled={attendanceMutation.isPending}
+                  >
+                    {attendanceMutation.isPending
+                      ? "Submitting..."
+                      : "Submit Attendance"}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

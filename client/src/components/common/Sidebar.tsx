@@ -2,8 +2,6 @@
 import { FaAlignRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 
-import logo from "../../assets/images/WhiteLogoBgRemoved.png";
-
 import {
   createContext,
   useContext,
@@ -31,15 +29,8 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
 
   return (
     <aside className="h-screen">
-      <nav className="flex h-full flex-col justify-between border-r border-gray-100 bg-white shadow-sm">
+      <nav className="flex h-full flex-col justify-between">
         <div className="flex items-center justify-between p-4 pb-2">
-          <img
-            src={logo}
-            alt="Logo"
-            className={`size-24 overflow-hidden transition-all ${
-              expanded ? "w-24" : "w-0"
-            }`}
-          />
           <button
             onClick={() => setExpanded((curr) => !curr)}
             className="rounded-lg bg-gray-50 p-1.5 hover:bg-gray-100"
@@ -47,10 +38,11 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
             {expanded ? <FaArrowLeft /> : <FaAlignRight />}
           </button>
         </div>
-
-        <SidebarContext.Provider value={{ expanded }}>
-          <ul className="flex-1 px-3">{children}</ul>
-        </SidebarContext.Provider>
+        <div className="relative grow rounded-xl">
+          <SidebarContext.Provider value={{ expanded }}>
+            <ul className="flex-1 px-3">{children}</ul>
+          </SidebarContext.Provider>
+        </div>
 
         {/* <img src={profile} alt="Profile" className="w-10 h-10 rounded-md" /> */}
         <div
@@ -92,7 +84,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
   return (
     <Link to={link}>
       <li
-        className={`group relative my-1 flex cursor-pointer items-center rounded-md px-3 py-2 font-medium transition-colors ${
+        className={`group flex items-center rounded-md px-3 py-2 font-medium transition-colors ${
           active
             ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
             : "text-gray-600 hover:bg-indigo-50"
@@ -100,12 +92,13 @@ export const SidebarItem: FC<SidebarItemProps> = ({
       >
         {icon}
         <span
-          className={`overflow-hidden transition-all ${
+          className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${
             expanded ? "ml-3 w-52" : "w-0"
           }`}
         >
           {text}
         </span>
+
         {alert && (
           <div
             className={`absolute right-2 h-2 w-2 rounded bg-indigo-400 ${
@@ -116,7 +109,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
 
         {!expanded && (
           <div
-            className={`invisible absolute left-full z-50 ml-6 -translate-x-3 rounded-md bg-indigo-100 px-2 py-1 text-sm text-indigo-800 opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100`}
+            className={`invisible absolute left-full z-50 ml-1 -translate-x-3 rounded-md bg-zinc-100 px-2 py-1 text-sm whitespace-nowrap text-zinc-600 opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100`}
           >
             {text}
           </div>

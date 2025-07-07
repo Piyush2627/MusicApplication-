@@ -144,7 +144,7 @@ function AddStudentsPage() {
   return (
     <div className="w-full p-6">
       <Toaster position="top-right" />
-      <div className="w-full rounded-xl border border-gray-200 bg-white p-6 shadow-md">
+      <div className="w-full rounded-xl border border-gray-200 p-6 shadow-md">
         <h2 className="mb-6 text-3xl font-bold text-gray-800">
           Add New Student
         </h2>

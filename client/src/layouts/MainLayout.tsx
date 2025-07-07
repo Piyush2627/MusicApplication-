@@ -20,9 +20,9 @@ function MainLayout() {
       try {
         const decodedToken = jwtDecode<DecodedToken>(token);
         const userRole = decodedToken.role;
-        if (userRole === 'admin') {
+        if (userRole === "admin") {
           navigate("/admin/dashboard", { replace: true });
-        } else if (userRole === 'student') {
+        } else if (userRole === "student") {
           navigate("/student/dashboard", { replace: true });
         }
       } catch (error) {
@@ -35,7 +35,7 @@ function MainLayout() {
   }, [navigate, location.pathname]);
 
   if (loading) {
-    return <div>Loading...</div>; // Or a spinner component
+    return <div>Loading...</div>;
   }
 
   return (

@@ -94,10 +94,10 @@ function StudentsDashboardPage() {
   }
 
   return (
-    <div className="w-full bg-slate-50">
+    <div className="w-full">
       <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Hero Section */}
-        <div className="relative mb-8 overflow-hidden rounded-xl bg-gradient-to-r from-orange-600 to-yellow-400 p-8 text-white shadow-lg">
+        {/* <div className="relative mb-8 overflow-hidden rounded-xl bg-gradient-to-r from-orange-600 to-yellow-400 p-8 text-white shadow-lg">
           <div className="relative z-10">
             <h1 className="text-3xl font-bold tracking-tight">
               Student Dashboard
@@ -109,7 +109,7 @@ function StudentsDashboardPage() {
           </div>
           <div className="absolute top-0 right-0 -mt-10 -mr-10 h-40 w-40 rounded-full bg-white/10" />
           <div className="absolute bottom-0 left-0 -mb-12 ml-4 h-32 w-32 rounded-full bg-white/10" />
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-8">
           {/* Sidebar */}
