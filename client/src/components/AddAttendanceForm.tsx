@@ -159,7 +159,7 @@ function AddAttendanceForm() {
     if (selectedInstrument) {
       return `Students for ${selectedInstrument}`;
     }
-    return 'Students';
+    return "Students";
   };
 
   const studentList = (
@@ -288,16 +288,16 @@ function AddAttendanceForm() {
                     type="text"
                     id="search"
                     placeholder="Search by name..."
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                   {searchQuery && (
-                    <ul className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <ul className="ring-opacity-5 absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black focus:outline-none sm:text-sm">
                       {searchResults.slice(0, 5).map((student) => (
                         <li
                           key={student._id}
-                          className="relative cursor-default select-none py-2 px-3 text-gray-900 hover:bg-indigo-600 hover:text-white"
+                          className="relative cursor-default px-3 py-2 text-gray-900 select-none hover:bg-indigo-600 hover:text-white"
                           onClick={() => handleAddStudent(student)}
                         >
                           {student.studentName}
@@ -312,7 +312,7 @@ function AddAttendanceForm() {
               <div className="sm:col-span-2">
                 <label
                   htmlFor="attendanceRemark"
-                  className="flex items-center text-sm font-semibold leading-6 text-gray-900"
+                  className="flex items-center text-sm leading-6 font-semibold text-gray-900"
                 >
                   <FiTag className="mr-2 h-5 w-5 text-indigo-600" />
                   Remark (Optional)
@@ -322,7 +322,7 @@ function AddAttendanceForm() {
                     type="text"
                     id="attendanceRemark"
                     placeholder="e.g., Special holiday class"
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-indigo-600 focus:ring-inset sm:text-sm sm:leading-6"
                     value={attendanceRemark}
                     onChange={(e) => setAttendanceRemark(e.target.value)}
                   />
@@ -378,7 +378,9 @@ function AddAttendanceForm() {
                           )}
                           {addedStudents.some((s) => s._id === student._id) && (
                             <button
-                              onClick={() => handleRemoveAddedStudent(student._id)}
+                              onClick={() =>
+                                handleRemoveAddedStudent(student._id)
+                              }
                               className="text-red-500 hover:text-red-700"
                             >
                               Remove

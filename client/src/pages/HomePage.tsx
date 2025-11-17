@@ -1,6 +1,5 @@
 import MusicCdImage from "../assets/images/MusicCd.png";
 import GuyWithGuitar from "../assets/images/pexels-yabee-1656066.jpg";
-import Logo from "../assets/images/Logo.png";
 import People from "../assets/images/Screenshot 2025-06-05 002657.png";
 import { Link } from "react-router-dom";
 
@@ -11,8 +10,9 @@ const HomePage = () => {
         <nav className="fixed top-0 z-50 mt-4 w-1/2 rounded-3xl bg-black shadow-md backdrop-blur-md">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
             <div className="flex items-center space-x-4">
-              <img src={Logo} alt="" className="size-12" />
-              <p className="text-2xl font-bold text-amber-400">SvaRa Music</p>
+              <p className="text-2xl font-bold text-amber-400">
+                The Raaga Music
+              </p>
             </div>
             {/* Buttons */}
             <div className="flex items-center space-x-4">
@@ -62,6 +62,7 @@ const HomePage = () => {
         </div>
       </section>
 
+      <div></div>
       {/* Instruments Section */}
       <section className="bg-amber-400 px-6 py-16 text-white">
         <h2 className="font-shockwave mb-10 text-center text-8xl font-semibold tracking-wider">
@@ -103,7 +104,7 @@ const HomePage = () => {
         <div className="mx-auto flex h-screen w-screen max-w-6xl flex-col items-center justify-center text-center">
           <div>
             <h2 className="font-dreamyChocolate mb-4 text-6xl font-extrabold tracking-wider">
-              Why Choose <span className="text-amber-400">SvaRa Musical?</span>
+              Why Choose <span className="text-amber-400">Raaga Musical?</span>
             </h2>
             <p className="mx-auto mb-12 max-w-2xl text-lg text-gray-300">
               Personalized music lessons brought to your doorstep – accessible,
@@ -218,10 +219,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      <div className="flex h-screen w-screen justify-center">
-        <img src={People} alt="" />
-      </div>
-
       {/* Current Students & Branches */}
       <section className="flex min-h-screen items-center justify-center bg-amber-400 px-6 py-20">
         <div className="w-full max-w-5xl text-center">
@@ -231,7 +228,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
             {/* Card 1 */}
             <div className="rounded-2xl bg-black p-8 text-white shadow-xl backdrop-blur-md transition-transform hover:scale-105 hover:shadow-amber-500/30">
-              <h3 className="text-2xl font-bold">350+ Active Students</h3>
+              <h3 className="text-2xl font-bold">50+ Active Students</h3>
               <p className="mt-2 text-sm text-gray-300">
                 Across all age groups and levels
               </p>
@@ -239,7 +236,7 @@ const HomePage = () => {
 
             {/* Card 2 */}
             <div className="rounded-2xl bg-black p-8 text-white shadow-xl backdrop-blur-md transition-transform hover:scale-105 hover:shadow-amber-500/30">
-              <h3 className="text-2xl font-bold">5+ Branches Nationwide</h3>
+              <h3 className="text-2xl font-bold">5+ Instruments Nationwide</h3>
               <p className="mt-2 text-sm text-gray-300">
                 Mumbai, Pune, Delhi, Bengaluru & Nagpur
               </p>
@@ -269,7 +266,7 @@ const HomePage = () => {
 
       {/* Footer */}
       <footer className="mt-10 bg-amber-300 py-6 text-center text-black">
-        <p>&copy; 2025 SvaRa Music Academy. All rights reserved.</p>
+        <p>&copy; 2025 Raaga Music Academy. All rights reserved.</p>
       </footer>
     </div>
   );

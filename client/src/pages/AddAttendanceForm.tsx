@@ -130,7 +130,7 @@ function AddAttendanceForm() {
   };
 
   return (
-    <div className="rounded-xl bg-white p-6 shadow-lg sm:p-8">
+    <div className="rounded-xl border-2 border-gray-300 bg-white p-6 sm:p-8">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Mark Attendance</h2>
         <p className="mt-1 text-sm text-gray-500">

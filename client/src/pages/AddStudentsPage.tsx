@@ -1,8 +1,20 @@
-import { useState, type ChangeEvent, useEffect } from "react";
+import { useState, type ChangeEvent, useEffect, type FormEvent } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import CustomInput from "../components/common/CustomInput";
 import toast, { Toaster } from "react-hot-toast";
+import SelectField from "../components/common/SelectField";
+import {
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaPhone,
+  FaMusic,
+  FaHome,
+  FaMapMarkerAlt,
+  FaGlobe,
+  FaCity,
+} from "react-icons/fa";
 
 function AddStudentsPage() {
   const [form, setForm] = useState({
@@ -48,7 +60,7 @@ function AddStudentsPage() {
           [name]: value,
         },
       }));
-    } else if (["city", "address"].includes(name)) {
+    } else if (["country", "city", "address"].includes(name)) {
       setForm((prev) => ({
         ...prev,
         StudentsId: {
@@ -76,7 +88,6 @@ function AddStudentsPage() {
     }
   };
 
-  // Sync studentsEmail with email
   useEffect(() => {
     setForm((prev) => ({
       ...prev,
@@ -141,89 +152,149 @@ function AddStudentsPage() {
     },
   });
 
-  return (
-    <div className="w-full p-6">
-      <Toaster position="top-right" />
-      <div className="w-full rounded-xl border border-gray-200 p-6 shadow-md">
-        <h2 className="mb-6 text-3xl font-bold text-gray-800">
-          Add New Student
-        </h2>
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    addUserAndStudent();
+  };
 
-        <div className="space-y-4">
-          <CustomInput
-            label="Name"
-            name="userName"
-            value={form.userName}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="Email"
-            name="email"
-            value={form.email}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="Password"
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="Mobile Number"
-            name="studentsMobileNumber"
-            type="number"
-            value={form.StudentsId.studentsMobileNumber}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="Instrument (comma-separated)"
-            name="studentsInstruments"
-            value={form.StudentsId.studentsInstruments}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="Branch"
-            name="studentsBranch"
-            value={form.StudentsId.studentsBranch}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="Age"
-            name="studentsAge"
-            type="number"
-            value={form.StudentsId.studentsAge}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="Country"
-            name="country"
-            value={form.StudentsId.studentsAddress.country}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="City"
-            name="city"
-            value={form.StudentsId.studentsAddress.city}
-            onChange={handleOnChange}
-          />
-          <CustomInput
-            label="Address"
-            name="address"
-            value={form.StudentsId.studentsAddress.address}
-            onChange={handleOnChange}
-          />
+  return (
+    <div className="min-h-screen w-full bg-white p-4 sm:p-6 lg:p-8">
+      <Toaster position="top-right" />
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-8 text-center">
+          <h2 className="text-4xl font-bold tracking-wider text-gray-800">
+            Add New Student
+          </h2>
+          <p className="text-md mt-2 text-gray-600">
+            Create a new student profile and user account.
+          </p>
         </div>
 
-        <div className="mt-6">
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-2xl">
+              <h3 className="text-xl font-semibold text-gray-700 mb-4">Account Information</h3>
+              <fieldset>
+                <div className="grid grid-cols-1 gap-6">
+                  <CustomInput
+                    label="Full Name"
+                    name="userName"
+                    value={form.userName}
+                    onChange={handleOnChange}
+                    Icon={FaUser}
+                  />
+                  <CustomInput
+                    label="Email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleOnChange}
+                    Icon={FaEnvelope}
+                  />
+                  <CustomInput
+                    label="Password"
+                    name="password"
+                    type="password"
+                    value={form.password}
+                    onChange={handleOnChange}
+                    Icon={FaLock}
+                  />
+                </div>
+              </fieldset>
+            </div>
+
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-2xl">
+              <h3 className="text-xl font-semibold text-gray-700 mb-4">Student Details</h3>
+              <fieldset>
+                <div className="grid grid-cols-1 gap-6">
+                  <CustomInput
+                    label="Mobile Number"
+                    name="studentsMobileNumber"
+                    type="number"
+                    value={form.StudentsId.studentsMobileNumber}
+                    onChange={handleOnChange}
+                    Icon={FaPhone}
+                  />
+                  <CustomInput
+                    label="Age"
+                    name="studentsAge"
+                    type="number"
+                    value={form.StudentsId.studentsAge}
+                    onChange={handleOnChange}
+                  />
+                  <CustomInput
+                    label="Instrument(s) (comma-separated)"
+                    name="studentsInstruments"
+                    value={form.StudentsId.studentsInstruments}
+                    onChange={handleOnChange}
+                    Icon={FaMusic}
+                  />
+                  <SelectField
+                    label="Branch / Residence"
+                    name="studentsBranch"
+                    value={form.StudentsId.studentsBranch}
+                    onChange={handleOnChange}
+                    options={[
+                      "7PD",
+                      "VTP Hi-life",
+                      "Rose-e-Meher",
+                      "Signature park",
+                      "Shivangan",
+                      "Sai Vista",
+                      "Lodha Blemendo Gahunje",
+                      "Kunal iconia Kiwle",
+                      "Godrej Kiwle",
+                      "Kolthe patil Kiwle",
+                      "Range Hill Jr Staff club",
+                      "IDSE Office Khadki",
+                      "Other",
+                    ]}
+                    Icon={FaHome}
+                  />
+                </div>
+              </fieldset>
+            </div>
+
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-2xl">
+              <h3 className="text-xl font-semibold text-gray-700 mb-4">Address</h3>
+              <fieldset>
+                <div className="grid grid-cols-1 gap-6">
+                  <SelectField
+                    label="Country"
+                    name="country"
+                    value={form.StudentsId.studentsAddress.country}
+                    onChange={handleOnChange}
+                    options={["India", "Australia"]}
+                    Icon={FaGlobe}
+                  />
+                  <SelectField
+                    label="City"
+                    name="city"
+                    value={form.StudentsId.studentsAddress.city}
+                    onChange={handleOnChange}
+                    options={["Pune", "Dhule", "Shirpur", "Arthe Shirpur"]}
+                    Icon={FaCity}
+                  />
+                  <CustomInput
+                    label="Street Address"
+                    name="address"
+                    value={form.StudentsId.studentsAddress.address}
+                    onChange={handleOnChange}
+                    Icon={FaMapMarkerAlt}
+                  />
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
           <button
-            onClick={() => addUserAndStudent()}
-            className="w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            type="submit"
+            className="w-full transform rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 px-4 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isPending}
           >
             {isPending ? "Adding..." : "Add Student"}
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

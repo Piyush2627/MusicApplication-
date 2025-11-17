@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import toast, { Toaster } from "react-hot-toast";
 import AddAttendanceModal from "../components/AddAttendanceModal";
+import AddAttendanceForm from "./AddAttendanceForm";
 
 // === Types ===
 interface AttendanceStudent {
@@ -172,7 +173,7 @@ const AttendanceDashboard: React.FC = () => {
           ➕ Add Attendance
         </button>
       </div>
-
+      <AddAttendanceForm />
       <AddAttendanceModal
         isOpen={modalOpen}
         onClose={() => {

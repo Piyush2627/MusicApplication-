@@ -129,7 +129,7 @@ const EnquiryList: React.FC = () => {
     );
 
   return (
-    <div className="mx-auto w-full p-6">
+    <div className="mx-auto w-full">
       <h2 className="mb-6 text-2xl font-bold">All Enquiries</h2>
       <div className="space-y-5">
         {enquiries.map((enquiry) => (
