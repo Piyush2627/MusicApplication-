@@ -1,6 +1,5 @@
 import MusicCdImage from "../assets/images/MusicCd.png";
 import GuyWithGuitar from "../assets/images/pexels-yabee-1656066.jpg";
-import People from "../assets/images/Screenshot 2025-06-05 002657.png";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {

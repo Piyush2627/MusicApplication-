@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import EnquiryList from "../components/EnquiryList";
-import CustomInput from "../components/common/CustomInput";
 
 interface EnquiryInput {
   studentName: string;
