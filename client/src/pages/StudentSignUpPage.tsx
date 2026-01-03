@@ -106,7 +106,7 @@ function StudentSignUpPage() {
       };
 
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/signup`,
+        `${import.meta.env.VITE_API_BASE_URL}/signup`,
         preparedData,
       );
       return res.data;

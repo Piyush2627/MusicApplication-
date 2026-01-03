@@ -10,11 +10,11 @@ function BatchList() {
     queryKey: ["batches"],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
+        `${import.meta.env.VITE_API_BASE_URL}/batches`,
       );
       console.log(res.data);
 
-      return res.data; // Ensure this is an array!
+      return res.data.data; // Ensure this is an array!
     },
   });
 
@@ -29,11 +29,11 @@ function BatchList() {
   }
 
   return (
-    <div className="flex flex-col space-y-4 p-6">
+    <div className="grid grid-cols-4 space-y-4 space-x-4">
       {data.map((batch) => (
         <div
           key={batch._id}
-          className="rounded-2xl border border-gray-100 bg-white p-6 shadow-md transition duration-300 hover:shadow-lg"
+          className="rounded-2xl border border-gray-100 bg-white p-6 shadow transition duration-300 hover:shadow-md"
         >
           <div className="flex items-center justify-between">
             <h2 className="mb-2 text-xl font-semibold text-gray-800">

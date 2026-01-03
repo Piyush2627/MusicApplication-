@@ -7,9 +7,9 @@ function UserList() {
   const fetchUserData = async () => {
     try {
       const UserInstanceData = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/getAllUser`,
+        `${import.meta.env.VITE_API_BASE_URL}/getAllUser`,
       );
-      setIsUserData(UserInstanceData.data);
+      setIsUserData(UserInstanceData.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +22,7 @@ function UserList() {
   const handleDel = async (objectID: string) => {
     try {
       const userDelete = await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/deleteUser/${objectID}`,
+        `${import.meta.env.VITE_API_BASE_URL}/deleteUser/${objectID}`,
       );
       console.log(userDelete);
 

@@ -14,6 +14,9 @@ import {
   FaMapMarkerAlt,
   FaGlobe,
   FaCity,
+  FaUserGraduate,
+  FaIdCard,
+  FaMapMarkedAlt,
 } from "react-icons/fa";
 
 function AddStudentsPage() {
@@ -115,7 +118,7 @@ function AddStudentsPage() {
       };
 
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/signup`,
+        `${import.meta.env.VITE_API_BASE_URL}/signup`,
         preparedData,
       );
 
@@ -171,11 +174,17 @@ function AddStudentsPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Changed to grid-cols-2 */}
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {/* SECTION 1: Account & Personal Details */}
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-2xl">
-              <h3 className="text-xl font-semibold text-gray-700 mb-4">Account Information</h3>
+              <h3 className="mb-6 flex items-center gap-2 text-xl font-semibold text-gray-700">
+                <FaUser className="text-violet-600" /> Account & Personal
+                Details
+              </h3>
               <fieldset>
                 <div className="grid grid-cols-1 gap-6">
+                  {/* Account Fields */}
                   <CustomInput
                     label="Full Name"
                     name="userName"
@@ -199,29 +208,40 @@ function AddStudentsPage() {
                     onChange={handleOnChange}
                     Icon={FaLock}
                   />
+
+                  {/* Divider for visual separation */}
+                  <div className="my-2 border-t border-gray-100"></div>
+
+                  {/* Personal Fields (Moved here for balance) */}
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <CustomInput
+                      label="Mobile Number"
+                      name="studentsMobileNumber"
+                      type="number"
+                      value={form.StudentsId.studentsMobileNumber}
+                      onChange={handleOnChange}
+                      Icon={FaPhone}
+                    />
+                    <CustomInput
+                      label="Age"
+                      name="studentsAge"
+                      type="number"
+                      value={form.StudentsId.studentsAge}
+                      onChange={handleOnChange}
+                    />
+                  </div>
                 </div>
               </fieldset>
             </div>
 
+            {/* SECTION 2: Enrollment & Address */}
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-2xl">
-              <h3 className="text-xl font-semibold text-gray-700 mb-4">Student Details</h3>
+              <h3 className="mb-6 flex items-center gap-2 text-xl font-semibold text-gray-700">
+                <FaMusic className="text-violet-600" /> Enrollment & Location
+              </h3>
               <fieldset>
                 <div className="grid grid-cols-1 gap-6">
-                  <CustomInput
-                    label="Mobile Number"
-                    name="studentsMobileNumber"
-                    type="number"
-                    value={form.StudentsId.studentsMobileNumber}
-                    onChange={handleOnChange}
-                    Icon={FaPhone}
-                  />
-                  <CustomInput
-                    label="Age"
-                    name="studentsAge"
-                    type="number"
-                    value={form.StudentsId.studentsAge}
-                    onChange={handleOnChange}
-                  />
+                  {/* Enrollment Fields */}
                   <CustomInput
                     label="Instrument(s) (comma-separated)"
                     name="studentsInstruments"
@@ -234,47 +254,32 @@ function AddStudentsPage() {
                     name="studentsBranch"
                     value={form.StudentsId.studentsBranch}
                     onChange={handleOnChange}
-                    options={[
-                      "7PD",
-                      "VTP Hi-life",
-                      "Rose-e-Meher",
-                      "Signature park",
-                      "Shivangan",
-                      "Sai Vista",
-                      "Lodha Blemendo Gahunje",
-                      "Kunal iconia Kiwle",
-                      "Godrej Kiwle",
-                      "Kolthe patil Kiwle",
-                      "Range Hill Jr Staff club",
-                      "IDSE Office Khadki",
-                      "Other",
-                    ]}
+                    options={["Raaga"]}
                     Icon={FaHome}
                   />
-                </div>
-              </fieldset>
-            </div>
 
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-2xl">
-              <h3 className="text-xl font-semibold text-gray-700 mb-4">Address</h3>
-              <fieldset>
-                <div className="grid grid-cols-1 gap-6">
-                  <SelectField
-                    label="Country"
-                    name="country"
-                    value={form.StudentsId.studentsAddress.country}
-                    onChange={handleOnChange}
-                    options={["India", "Australia"]}
-                    Icon={FaGlobe}
-                  />
-                  <SelectField
-                    label="City"
-                    name="city"
-                    value={form.StudentsId.studentsAddress.city}
-                    onChange={handleOnChange}
-                    options={["Pune", "Dhule", "Shirpur", "Arthe Shirpur"]}
-                    Icon={FaCity}
-                  />
+                  {/* Divider for visual separation */}
+                  <div className="my-2 border-t border-gray-100"></div>
+
+                  {/* Address Fields */}
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <SelectField
+                      label="Country"
+                      name="country"
+                      value={form.StudentsId.studentsAddress.country}
+                      onChange={handleOnChange}
+                      options={["India", "Australia"]}
+                      Icon={FaGlobe}
+                    />
+                    <SelectField
+                      label="City"
+                      name="city"
+                      value={form.StudentsId.studentsAddress.city}
+                      onChange={handleOnChange}
+                      options={["Pune", "Dhule", "Shirpur", "Arthe Shirpur"]}
+                      Icon={FaCity}
+                    />
+                  </div>
                   <CustomInput
                     label="Street Address"
                     name="address"
@@ -289,7 +294,7 @@ function AddStudentsPage() {
 
           <button
             type="submit"
-            className="w-full transform rounded-lg bg-gradient-to-r from-blue-600 to-indigo-700 px-4 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full transform rounded-lg bg-gradient-to-r from-violet-600 to-indigo-700 px-4 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-[1.02] active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
             disabled={isPending}
           >
             {isPending ? "Adding..." : "Add Student"}

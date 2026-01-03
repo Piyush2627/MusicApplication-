@@ -1,5 +1,11 @@
 import React, { useState, type FormEvent, useEffect } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  usePrefetchQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import type { UserType } from "../types/index.types";
 import axios from "axios";
 
 interface Student {
@@ -21,21 +27,37 @@ export const CreateBatchForm: React.FC = () => {
   const queryClient = useQueryClient();
   const [studentSearch, setStudentSearch] = useState("");
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+  const [isAdminUser, setIsAdminUser] = useState<UserType[]>([]);
+  const { data: User = [] } = useQuery<UserType[]>({
+    queryKey: ["userDetails"],
+    queryFn: async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/getAllUser`,
+      );
+      return res.data.data;
+    },
+  });
+  console.log("User data:", isAdminUser);
+
+  useEffect(() => {
+    const adminUsers = User.filter((user) => user.role === "admin");
+    setIsAdminUser(adminUsers);
+  }, [User]);
 
   const { data: students = [] } = useQuery<Student[]>({
     queryKey: ["students"],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+        `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
       );
-      return res.data;
+      return res.data.data;
     },
   });
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async (newBatch: Batch) => {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
+        `${import.meta.env.VITE_API_BASE_URL}/batches`,
         newBatch,
       );
       return res.data;
@@ -115,14 +137,18 @@ export const CreateBatchForm: React.FC = () => {
         placeholder="Batch Name"
         className="w-full rounded border px-3 py-2"
       />
-
-      <input
-        required
+      <select
         value={batchInstructor}
         onChange={(e) => setBatchInstructor(e.target.value)}
-        placeholder="Instructor ID"
         className="w-full rounded border px-3 py-2"
-      />
+      >
+        <option value="">Select Instructor</option>
+        {isAdminUser.map((user) => (
+          <option key={user._id} value={user._id}>
+            {user.userName}
+          </option>
+        ))}
+      </select>
 
       <input
         value={batchInstrument}

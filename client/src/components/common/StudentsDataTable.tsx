@@ -14,9 +14,9 @@ interface StudentsDataTableProps {
 
 const fetchStudents = async (): Promise<StudentsType[]> => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+    `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
   );
-  return data;
+  return data.data;
 };
 
 function StudentsDataTable({

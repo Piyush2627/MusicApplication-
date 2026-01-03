@@ -9,7 +9,7 @@ import { FaExclamationTriangle } from "react-icons/fa";
 
 const fetchStudents = async () => {
   const res = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+    `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
   );
   return res.data;
 };

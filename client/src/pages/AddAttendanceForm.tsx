@@ -12,23 +12,22 @@ function AddAttendanceForm() {
   const [attendanceStatusMap, setAttendanceStatusMap] = useState<{
     [studentId: string]: "Present" | "Absent" | "Late";
   }>({});
+
   const [searchQuery, setSearchQuery] = useState("");
   const [addedStudents, setAddedStudents] = useState<StudentsType[]>([]);
 
   const queryClient = useQueryClient();
 
   const fetchClassBatch = async () => {
-    const res = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
-    );
-    return res.data;
+    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/batches`);
+    return res.data.data;
   };
 
   const fetchAllStudents = async () => {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+      `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
     ); // adjust path if needed
-    return res.data;
+    return res.data.data;
   };
 
   const {
@@ -56,7 +55,7 @@ function AddAttendanceForm() {
       }[];
     }) => {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/attendance`,
+        `${import.meta.env.VITE_API_BASE_URL}/attendance`,
         payload,
       );
       return res.data;
@@ -133,7 +132,7 @@ function AddAttendanceForm() {
     <div className="rounded-xl border-2 border-gray-300 bg-white p-6 sm:p-8">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Mark Attendance</h2>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="text-jjjkjkjkjkjkjkjkjkkkjjkjjkgray-500 mt-1 text-sm">
           Select a date and batch to begin.
         </p>
       </div>

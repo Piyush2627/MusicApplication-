@@ -22,9 +22,9 @@ const InstrumentRentalList: React.FC = () => {
     queryKey: ["rentals"],
     queryFn: async () => {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/instrument`,
+        `${import.meta.env.VITE_API_BASE_URL}/instrument`,
       );
-      return response.data;
+      return response.data.data;
     },
   });
 
@@ -32,7 +32,7 @@ const InstrumentRentalList: React.FC = () => {
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/instrument/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/instrument/${id}`,
       );
     },
     onSuccess: () => {
@@ -43,12 +43,9 @@ const InstrumentRentalList: React.FC = () => {
   // Mark as paid mutation
   const markPaidMutation = useMutation({
     mutationFn: async (id: string) => {
-      await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/instrument/${id}`,
-        {
-          paymentStatus: "paid",
-        },
-      );
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/instrument/${id}`, {
+        paymentStatus: "paid",
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["rentals"] });

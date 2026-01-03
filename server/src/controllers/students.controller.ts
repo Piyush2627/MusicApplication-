@@ -1,6 +1,7 @@
 import { Response, Request } from "express";
 import asyncHandler from "../utils/asyncHandler";
 import { students } from "../model/studentsModel";
+import { ApiResponse } from "../utils/ApiResponse";
 
 const createStudents = asyncHandler(async (req: Request, res: Response) => {
   const {
@@ -24,7 +25,9 @@ const createStudents = asyncHandler(async (req: Request, res: Response) => {
     studentsJoiningDate,
     studentsAddress,
   });
-  res.status(200).json(newStudents);
+  res
+    .status(200)
+    .json(new ApiResponse(200, newStudents, "Student created successfully"));
 });
 
 const updateStudents = asyncHandler(async (req: Request, res: Response) => {
@@ -38,24 +41,34 @@ const updateStudents = asyncHandler(async (req: Request, res: Response) => {
     });
 
     if (!updatedDoc) {
-      return res.status(404).json({ message: "Document not found" });
+      return res
+        .status(404)
+        .json(new ApiResponse(404, null, "Document not found"));
     }
 
-    res.status(200).json(updatedDoc);
+    res
+      .status(200)
+      .json(new ApiResponse(200, updatedDoc, "Student updated successfully"));
   } catch (error) {
-    res.status(500).json({ message: "Error updating document", error });
+    res
+      .status(500)
+      .json(new ApiResponse(500, error, "Error updating document"));
   }
 });
 
 const getStudentByID = asyncHandler(async (req: Request, res: Response) => {
   const id = req.params.id;
   const instance = await students.findById(id);
-  res.status(200).json(instance);
+  res
+    .status(200)
+    .json(new ApiResponse(200, instance, "Student fetched successfully"));
 });
 
 const getAllStudentsData = asyncHandler(async (req: Request, res: Response) => {
   const instance = await students.find();
-  res.status(200).json(instance);
+  res
+    .status(200)
+    .json(new ApiResponse(200, instance, "Students fetched successfully"));
 });
 
 export { createStudents, getAllStudentsData, updateStudents, getStudentByID };

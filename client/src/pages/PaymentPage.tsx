@@ -24,9 +24,9 @@ const PaymentPage = () => {
     queryKey: ["payments"],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/payment`,
+        `${import.meta.env.VITE_API_BASE_URL}/payment`,
       );
-      return res.data;
+      return res.data.data;
     },
   });
 

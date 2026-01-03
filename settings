@@ -1,0 +1,479 @@
+{
+	// =========================================================
+	// VS CODE VIM: HYBRID DELEGATION CONFIGURATION
+	// =========================================================
+	// Enable the extension but prepare for delegation
+	"vim.disableExtension": false,
+
+	// CLIPBOARD INTEGRATION
+	// Syncs Vim registers with OS clipboard.
+	// Allows 'p' to paste from external apps and 'y' to copy to them.
+	"vim.useSystemClipboard": true,
+
+	// PREVENT VIM FROM HIJACKING NATIVE COPY
+	// Essential for Ctrl+C to work as Copy, not Escape.
+	"vim.overrideCopy": false,
+
+	// KEY DELEGATION (The "Handle Keys" Strategy)
+	// "false" = Send key directly to VS Code.
+	// "true"  = Let Vim handle it.
+	"vim.handleKeys": {
+		"<Tab>": false,
+
+		// SYSTEM OPERATIONS
+		"<C-s>": false, // Save File
+		"<C-p>": false, // Quick Open (Go to File)
+		"<C-n>": false, // New File
+		"<C-o>": false, // Open File
+
+		// CLIPBOARD OPERATIONS
+		"<C-c>": false, // Copy (Standard CUA)
+		"<C-v>": false, // Paste (Standard CUA)
+		"<C-x>": false, // Cut (Standard CUA)
+
+		// EDIT HISTORY
+		"<C-z>": false, // Undo (Standard CUA)
+		"<C-y>": false, // Redo (Standard CUA)
+
+		// NAVIGATION & VIEW
+		"<C-f>": false, // Find in File (VS Code Widget)
+		"<C-g>": false, // Go to Line
+		"<C-b>": false, // Toggle Primary Sidebar
+		"<C-j>": false, // Toggle Panel (Terminal)
+		"<C-a>": false, // Select All
+
+		// CHORDING LEADER
+		"<C-k>": false, // Allow Ctrl+K chords (Zen Mode, Clear Terminal)
+		"<C-d>": false
+	},
+
+	// SMART RELATIVE LINE NUMBERS
+	// Absolute in Insert Mode, Relative in Normal Mode.
+	"vim.smartRelativeLine": true,
+
+	// MOUSE BEHAVIOR
+	// Use system modifiers for multi-cursor clicks to avoid Vim mode conflicts.
+	"editor.multiCursorModifier": "ctrlCmd",
+
+	// =========================================================
+	// MINIMAL UI / ZEN MODE AESTHETIC
+	// =========================================================
+
+	// HIDE PERSISTENT UI ELEMENTS
+	"workbench.activityBar.location": "hidden", // Hide left icon bar
+	"editor.minimap.enabled": false, // Hide right code map
+	"editor.breadcrumbs.enabled": false, // Hide top file path
+	"editor.glyphMargin": false, // Hide gutter margin
+
+	// STATUS BAR
+	// Keep visible for Vim mode info, but typically minimalists might hide it.
+	// We keep it true for utility in this "best fit" scenario.
+	"workbench.statusBar.visible": true,
+
+	// TYPOGRAPHY & VISUALS
+	"editor.renderWhitespace": "selection", // Reduce visual noise
+	"editor.fontLigatures": true, // Cleaner symbols (if font supports)
+	"editor.cursorBlinking": "solid", // Non-blinking block cursor (Vim style)
+	"editor.cursorSmoothCaretAnimation": "on", // Smooth movement
+
+	// WINDOW
+	"window.menuBarVisibility": "toggle", // Hide top menu bar (Alt to show)
+
+	// EXCLUSIONS
+	// Prevent Vim from handling Ctrl+D in settings is sometimes unreliable,
+	// so we handle it in keybindings.json (see below).{
+	//Window
+
+	// Menubar Visibility (VSCODE)
+
+	"window.density.editorTabHeight": "compact",
+	"terminal.integrated.sendKeybindingsToShell": true,
+
+	//Editor
+	"editor.tabSize": 2,
+	"editor.fontSize": 16,
+	"editor.lineHeight": 24,
+	"editor.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
+	"editor.wordWrap": "bounded",
+	"editor.wrappingIndent": "same",
+	"editor.lineNumbers": "relative",
+	"editor.folding": false,
+	"editor.insertSpaces": false,
+	"editor.smoothScrolling": false,
+	"editor.detectIndentation": true,
+	"editor.suggestSelection": "first",
+	"editor.scrollBeyondLastLine": false,
+	"editor.renderControlCharacters": false,
+	"editor.unicodeHighlight.ambiguousCharacters": false,
+	"editor.quickSuggestionsDelay": 0,
+	"editor.bracketPairColorization.enabled": false,
+	"editor.scrollbar.horizontal": "hidden",
+	"editor.scrollbar.vertical": "hidden",
+	"editor.hideCursorInOverviewRuler": true,
+	"editor.unicodeHighlight.allowedCharacters": {
+		"а": true,
+		"с": true,
+		"Т": true,
+		"б": true,
+		"е": true
+	},
+
+	//Editor settings for formatting
+	"editor.formatOnSave": true,
+	"workbench.iconTheme": "catppuccin-mocha",
+	"workbench.startupEditor": "none",
+	"window.openFilesInNewWindow": "off",
+
+	// Terminal
+	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
+	"terminal.integrated.fontSize": 14,
+
+	//Explorer
+	"explorer.confirmDelete": false,
+	"explorer.compactFolders": false,
+	"explorer.confirmDragAndDrop": false,
+
+	//Emmet
+	"emmet.triggerExpansionOnTab": true,
+	"emmet.showExpandedAbbreviation": "never",
+
+	//Formatters
+	"prettier.semi": true,
+	"prettier.useTabs": true,
+	"prettier.singleQuote": false,
+	"prettier.jsxSingleQuote": false,
+	"prettier.arrowParens": "avoid",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.inlineSuggest.enabled": true,
+
+	// Files settings
+	"files.associations": { "*.scss": "postcss", "*.module.scss": "postcss" },
+
+	//Prisma Formatter
+	"[prisma]": {
+		"editor.defaultFormatter": "Prisma.prisma"
+	},
+
+	//Breadcrumbs Off
+	"breadcrumbs.enabled": false,
+
+	// Java/Typescript
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"typescript.preferences.quoteStyle": "double",
+	"javascript.preferences.quoteStyle": "double",
+	"javascript.format.semicolons": "insert",
+	"typescript.format.semicolons": "insert",
+	"typescript.suggest.paths": false,
+	"javascript.suggest.paths": false,
+
+	// Telemetry (VSCODE)
+	"telemetry.telemetryLevel": "off",
+	"vim.leader": "<space>",
+	"vim.easymotion": true,
+	"vim.incsearch": true,
+	"vim.useCtrlKeys": true,
+	"vim.hlsearch": true,
+	"vim.highlightedyank.enable": true,
+	"vim.insertModeKeyBindings": [
+		{
+			"before": ["j", "j"],
+			"after": ["<Esc>"]
+		}
+	],
+	"vim.normalModeKeyBindings": [
+		{
+			"before": ["<leader>", "s", "a"],
+			"commands": ["editor.action.selectAll"]
+		},
+		{
+			"before": ["<leader>", "w"],
+			"commands": ["workbench.action.files.save"]
+		},
+		{
+			"before": ["<leader>", "e"],
+			"commands": ["workbench.action.toggleSidebarVisibility"]
+		},
+		{
+			"before": ["<leader>", "q"],
+			"commands": ["workbench.action.closeActiveEditor"]
+		},
+		{
+			"before": ["<leader>", "h"],
+			"commands": [":nohl"]
+		},
+		{
+			"before": ["<leader>", "s", "v"],
+			"commands": ["workbench.action.splitEditor"]
+		},
+		{
+			"before": ["<leader>", "s", "h"],
+			"commands": ["workbench.action.splitEditorDown"]
+		},
+		{
+			"before": ["<leader>", "t", "o"],
+			"commands": [":tabnew"]
+		},
+		{
+			"before": ["<leader>", "t", "x"],
+			"commands": [":tabclose"]
+		},
+		{
+			"before": ["<S-h>"],
+			"commands": [":tabp"]
+		},
+		{
+			"before": ["<S-l>"],
+			"commands": [":tabnext"]
+		},
+		{
+			"before": ["<leader>", "f", "f"],
+			"commands": ["workbench.action.quickOpen"]
+		},
+		{
+			"before": ["<leader>", "f", "b"],
+			"commands": ["workbench.action.showAllEditors"]
+		},
+		{
+			"before": ["<leader>", "f", "s"],
+			"commands": ["workbench.action.findInFiles"]
+		},
+		{
+			"before": ["<leader>", "r", "n"],
+			"commands": ["editor.action.rename"]
+		},
+		{
+			"before": ["<leader>", "a", "f"],
+			"commands": ["editor.action.autoFix"]
+		},
+		{
+			"before": ["<leader>", "r", "a"],
+			"commands": ["editor.action.rename"]
+		},
+		{
+			"before": ["<leader>", "f", "m"],
+			"commands": ["editor.action.format"]
+		},
+		{
+			"before": ["<leader>", "c", "a"],
+			"commands": ["editor.action.quickFix"]
+		},
+		{
+			"before": ["<S-k>"],
+			"commands": ["editor.action.showHover"]
+		}
+	],
+	"vim.visualModeKeyBindings": [
+		{
+			"before": [">"],
+			"commands": ["editor.action.indentLines"]
+		},
+		{
+			"before": ["<"],
+			"commands": ["editor.action.outdentLines"]
+		},
+		{
+			"before": ["<S-j>"],
+			"commands": ["editor.action.moveLinesDownAction"]
+		},
+		{
+			"before": ["<S-k>"],
+			"commands": ["editor.action.moveLinesUpAction"]
+		}
+	],
+	"workbench.colorTheme": "Catppuccin Mocha",
+	"workbench.sideBar.location": "right",
+	"chat.disableAIFeatures": true,
+	"editor.tabCompletion": "onlySnippets",
+	"editor.tabFocusMode": true,
+	"workbench.editor.highlightModifiedTabs": true
+}
+
+
+
+[
+	{
+		"key": "ctrl+alt+j",
+		"command": "editor.action.copyLinesDownAction",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+w",
+		"command": "workbench.action.closeActiveEditor",
+		"when": "editorTextFocus && vim.active && vim.mode == 'Insert'"
+	},
+	{
+		"key": "ctrl+shift+alt+down",
+		"command": "-editor.action.copyLinesDownAction",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+alt+k",
+		"command": "editor.action.copyLinesUpAction",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+shift+alt+up",
+		"command": "-editor.action.copyLinesUpAction",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+f f",
+		"command": "prettier.forceFormatDocument"
+	},
+	{
+		"key": "ctrl+f r",
+		"command": "editor.action.startFindReplaceAction",
+		"when": "editorFocus || editorIsOpen"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "-editor.action.startFindReplaceAction",
+		"when": "editorFocus || editorIsOpen"
+	},
+	{
+		"key": "ctrl+alt+e",
+		"command": "workbench.view.explorer",
+		"when": "viewContainer.workbench.view.explorer.enabled"
+	},
+	{
+		"key": "ctrl+k ctrl+o",
+		"command": "-workbench.action.files.openFolder",
+		"when": "openFolderWorkspaceSupport"
+	},
+	{
+		"key": "ctrl+shift+p",
+		"command": "-workbench.action.showCommands"
+	},
+	{
+		"key": "ctrl+k ctrl+s",
+		"command": "-workbench.action.openGlobalKeybindings"
+	},
+	{
+		"key": "a",
+		"command": "explorer.newFile",
+		"when": "filesExplorerFocus && !inputFocus"
+	},
+	{
+		"key": "f",
+		"command": "explorer.newFolder",
+		"when": "filesExplorerFocus && !inputFocus"
+	},
+	{
+		"key": "d",
+		"command": "deleteFile",
+		"when": "filesExplorerFocus && !inputFocus"
+	},
+	{
+		"key": "y",
+		"command": "filesExplorer.copy",
+		"when": "filesExplorerFocus && !inputFocus"
+	},
+	{
+		"key": "p",
+		"command": "filesExplorer.paste",
+		"when": "filesExplorerFocus && !inputFocus"
+	},
+	{
+		"key": "x",
+		"command": "filesExplorer.cut",
+		"when": "filesExplorerFocus && !inputFocus"
+	},
+	{
+		"key": "r",
+		"command": "renameFile",
+		"when": "filesExplorerFocus && !inputFocus"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "workbench.action.focusActiveEditorGroup",
+		"when": "workbench.explorer.openEditorsView.active || filesExplorerFocus && vim.active && vim.mode!='Insert'"
+	},
+	{
+		"key": "ctrl+k",
+		"command": "workbench.action.navigateUp",
+		"when": "vim.active && vim.mode!='Insert'"
+	},
+	{
+		"key": "ctrl+k",
+		"command": "workbench.files.action.focusOpenEditorsView",
+		"when": "filesExplorerFocus && vim.active && vim.mode!='Insert'"
+	},
+	{
+		"key": "ctrl+l",
+		"command": "workbench.action.navigateRight",
+		"when": "vim.active && vim.mode!='Insert'"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "workbench.action.navigateDown",
+		"when": "vim.active && vim.mode!='Insert'"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "workbench.files.action.focusFilesExplorer",
+		"when": "!editorFocus && workbench.explorer.openEditorsView.active && vim.active && vim.mode!='Insert'"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "workbench.action.navigateLeft",
+		"when": "vim.active && vim.mode!='Insert'"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "vim.remap",
+		"when": "inputFocus && vim.mode == 'Normal'",
+		"args": {
+			"after": ["y", "y"]
+		}
+	},
+	{
+		"key": "ctrl+v",
+		"command": "-editor.action.clipboardPasteAction"
+	},
+
+	{
+		"key": "ctrl+k ctrl+i",
+		"command": "-editor.action.showHover",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "space o",
+		"command": "filesExplorer.openFilePreserveFocus",
+		"when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus"
+	},
+	{
+		"key": "g c c",
+		"command": "editor.action.commentLine",
+		"when": "editor.TextFocus && !editorReadonly"
+	},
+	{
+		"key": "g d",
+		"command": "editor.action.revealDefinition",
+		"when": "vim.mode == 'Normal' && editorHasDefinitionProvider && editorTextFocus && !isEmbeddedEditor"
+	},
+	{
+		"key": "] d",
+		"command": "editor.action.marker.next",
+		"when": "editorFocus && vim.mode == 'Normal'"
+	},
+	{
+		"key": "alt+f8",
+		"command": "-editor.action.marker.next",
+		"when": "editorFocus"
+	},
+	{
+		"key": "[ d",
+		"command": "editor.action.marker.prev",
+		"when": "editorFocus && vim.mode == 'Normal'"
+	},
+	{
+		"key": "ctrl+alt+s",
+		"command": "workbench.files.action.focusFilesExplorer"
+	},
+	{
+		"key": "ctrl+d",
+		"command": "editor.action.addSelectionToNextFindMatch",
+		"when": "editorTextFocus && vim.active && vim.mode == 'Insert'"
+	}
+]

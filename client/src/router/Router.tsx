@@ -15,12 +15,13 @@ import EnquiryPage from "../pages/EnquiryPage";
 import EditStudentsPage from "../pages/EditStudentsPage";
 import EditBatch from "../pages/EditBatch";
 import StudentsProfiles from "../pages/StudentsProfiles";
-import Instruments from "../components/Instruments";
 import AdminLayout from "../layouts/AdminLayout";
 import StudentLayout from "../layouts/StudentLayout";
 import SettingsPage from "../pages/SettingsPage";
 import AdminSignUpPage from "../pages/AdminSignUpPage";
 import StudentSignUpPage from "../pages/StudentSignUpPage";
+import InstrumentPage from "../pages/InstrumentPage";
+import AssignmentPage from "../pages/AssignmentPage";
 
 const router = createBrowserRouter([
   {
@@ -55,8 +56,9 @@ const router = createBrowserRouter([
                 path: "editStudentInfoPage/:Id",
                 element: <EditStudentsPage />,
               },
-              { path: "editBatch/:batchId", element: <EditBatch /> },
-              { path: "instruments", element: <Instruments /> },
+              { path: "batch/editBatch/:batchId", element: <EditBatch /> },
+              { path: "instrument", element: <InstrumentPage /> },
+              { path: "assignment", element: <AssignmentPage /> },
               { path: "user-list", element: <UserList /> },
               { path: "settings", element: <SettingsPage /> },
             ],

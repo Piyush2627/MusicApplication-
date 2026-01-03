@@ -31,9 +31,9 @@ const PaymentForm: React.FC = () => {
     queryKey: ["students"],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+        `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
       );
-      return res.data;
+      return res.data.data;
     },
   });
 
@@ -48,7 +48,7 @@ const PaymentForm: React.FC = () => {
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async (payment: Payment) => {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/payment`,
+        `${import.meta.env.VITE_API_BASE_URL}/payment`,
         payment,
       );
       return res.data;

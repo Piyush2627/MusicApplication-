@@ -1,43 +1,54 @@
 import axios from "axios";
-
-//types
-import { type StudentsType } from "../types/index.types";
+import { type AttendanceType } from "../types/index.types";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+
+const id = "6953a3e8a21ae765b9ed57ee";
+const fetchAttendance = async (): Promise<AttendanceType[]> => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}/attendance/student/${id}`,
+  );
+  return response.data.data;
+};
+
+const chunk = (arr: AttendanceType[]) => {
+  const maxChunk = 8;
+  const coverUp = 2;
+  let i = 0;
+  const block = [];
+  console.log("inside function");
+  while (i < arr.length) {
+    const base = arr.slice(i, i + maxChunk);
+    const absence = base.filter(
+      (ele) => ele.attendanceRecord[0]?.attendanceStatus == "Absent",
+    ).length;
+    const cover = Math.min(absence, coverUp);
+    const totalChunk = maxChunk + cover;
+    block.push(arr.slice(i, i + totalChunk));
+    i = i + 8;
+  }
+  return block;
+};
 
 function StudentAttendanceView() {
-  const fetchStudents = async (): Promise<StudentsType[]> => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
-    );
-    console.log(response.data.data);
-    return response.data.data;
-  };
-
-  //Query
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["students"],
-    queryFn: fetchStudents,
+  const [isAttendanceData, setIsAttendance] = useState<[]>();
+  const { data: AttendanceData = [] } = useQuery({
+    queryKey: ["attendance"],
+    queryFn: fetchAttendance,
   });
-
-  if (isLoading)
-    return (
-      <div className="w-full p-6 text-center text-gray-500">
-        Loading attendance records...
-      </div>
-    );
-
-  if (isError)
-    return (
-      <div className="w-full p-6 text-center text-red-600">
-        Error loading attendance: {(error as Error).message}
-      </div>
-    );
+  useEffect(() => {
+    if (AttendanceData.length > 0) {
+      chunk(AttendanceData);
+    }
+  }, [AttendanceData]);
   return (
-    <div>
-      StudentAttendanceView
-      {data?.map((ele) => {
-        return <div key={ele._id}>hi</div>;
-      })}
+    <div className="font-poppins-medium">
+      <div className="mt-1 px-4 text-gray-600">StudentAttendanceView</div>
+      <div className="px-4">
+        {AttendanceData.map((ele) => {
+          return <div key={ele._id}>{ele.attendanceRemark}</div>;
+        })}
+      </div>
     </div>
   );
 }

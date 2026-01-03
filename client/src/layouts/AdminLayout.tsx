@@ -48,8 +48,8 @@ function AdminLayout() {
           />
           <SidebarItem
             icon={<BsCardChecklist />}
-            text="Assessments"
-            link="/admin/assessments"
+            text="Assignment"
+            link="/admin/assignment"
           />
           <SidebarItem
             icon={<FaChalkboardTeacher />}
@@ -75,7 +75,7 @@ function AdminLayout() {
           />
         </Sidebar>
       </div>
-      <div className="h-screen flex-1 overflow-y-auto">
+      <div className="h-screen flex-1 overflow-y-auto rounded-2xl">
         <Outlet />
       </div>
     </div>

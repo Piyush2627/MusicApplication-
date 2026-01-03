@@ -23,16 +23,22 @@ function LoginPage() {
   const mutation = useMutation({
     mutationFn: async () => {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/loginUser`,
+        `${import.meta.env.VITE_API_BASE_URL}/loginUser`,
         isLoginInput,
       );
-      return response.data;
+      return response.data.data;
     },
     onSuccess: (data) => {
       if (data.token) {
         localStorage.setItem("token", data.token);
+
+        // 🔥 NEW — store user details
+        localStorage.setItem("user", JSON.stringify(data.userData));
+
+        // Decode token for safety (optional)
         const decodedToken = jwtDecode<DecodedToken>(data.token);
         const userRole = decodedToken.role;
+
         if (userRole === "admin") {
           navigate("/admin/dashboard");
         } else if (userRole === "student") {

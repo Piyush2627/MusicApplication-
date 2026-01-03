@@ -19,16 +19,16 @@ import StudentsDataTable from "../components/common/StudentsDataTable";
 // --- API Fetching Functions ---
 const fetchStudents = async (): Promise<StudentsType[]> => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+    `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
   );
-  return data;
+  return data.data;
 };
 
 const fetchBatches = async (): Promise<ClassBatchType[]> => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
+    `${import.meta.env.VITE_API_BASE_URL}/batches`,
   );
-  return data;
+  return data.data;
 };
 
 interface Enquiry {
@@ -40,18 +40,16 @@ interface Enquiry {
 
 const fetchEnquiries = async (): Promise<Enquiry[]> => {
   const { data } = await axios.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/enquiries`,
+    `${import.meta.env.VITE_API_BASE_URL}/enquiries`,
   );
   return data.data || [];
 };
 
-// --- Main Dashboard Page Component ---
 function StudentsDashboardPage() {
   const [studentSearch, setStudentSearch] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
-  // --- Data Fetching ---
   const {
     data: students,
     isLoading,
@@ -156,7 +154,6 @@ function StudentsDashboardPage() {
           <div className="absolute top-0 right-0 -mt-10 -mr-10 h-32 w-32 rounded-full bg-white/10" />
           <div className="absolute bottom-0 left-0 -mb-12 ml-4 h-24 w-24 rounded-full bg-white/10" />
         </div>
-
         {/* Stat Cards */}
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Card
@@ -185,7 +182,6 @@ function StudentsDashboardPage() {
           />
           <RecentEnquiries enquiries={enquiries} />
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
           {/* Sidebar */}
           <div className="space-y-6 lg:col-span-1">
@@ -452,7 +448,7 @@ const RecentEnquiries = memo(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         )
-        .slice(0, 4);
+        .slice(0, 1);
     }, [enquiries]);
 
     return (

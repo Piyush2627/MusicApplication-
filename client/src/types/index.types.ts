@@ -7,6 +7,25 @@ export type UserType = {
   StudentsId?: StudentsType;
 };
 
+export type EnquiryRemarkType = {
+  note: string;
+  addedBy: string;
+  createdAt: string;
+};
+
+export type EnquiryType = {
+  _id: string;
+  studentName: string;
+  email: string;
+  phone: string;
+  instrument: string;
+  preferredTime: string;
+  message: string;
+  status: string;
+  remarks: EnquiryRemarkType[];
+  followUp: string;
+};
+
 export type StudentsType = {
   StudentsStatus: string;
   target: any;
@@ -42,7 +61,7 @@ export type AttendanceType = {
 export type ClassBatchType = {
   _id: string;
   batchName: string;
-  batchInstructor: string;
+  batchInstructor: InstructorType;
   batchInstrument?: string;
   batchTiming: string;
   batchStudents: StudentsType[];
@@ -51,12 +70,24 @@ export type ClassBatchType = {
   createdAt?: string;
   updatedAt?: string;
 };
+export interface InstructorType {
+  _id: string;
+  userName: string;
+  email?: string;
+}
 export interface RentalDetails {
   startDate?: string;
   endDate?: string;
   actualReturnDate?: string;
   isLate?: boolean;
   lateFee?: number;
+}
+
+export interface ModelType {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  tittle?: string;
 }
 
 export interface InstrumentTransaction {

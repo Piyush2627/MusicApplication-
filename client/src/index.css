@@ -6,9 +6,24 @@
   font-family: DreamyChocolate;
   src: url("../src/assets/fonts/Dreamy\ Chocolate.otf");
 }
+@font-face {
+  font-family: Alexana;
+  src: url("../src/assets/fonts/Alexana\ Neue.otf");
+}
+@font-face {
+  font-family: poppins;
+  src: url("../src/assets/fonts/Poppins-Regular.ttf");
+}
+@font-face {
+  font-family: poppins-medium;
+  src: url("../src/assets/fonts/Poppins-Medium.ttf");
+}
 @import "tailwindcss";
 
 @theme {
+  --font-poppins-medium: "poppins-medium";
+  --font-poppins: "poppins";
   --font-shockwave: "Shockwave";
   --font-dreamyChocolate: "DreamyChocolate";
+  --font-alexana: "Alexana";
 }

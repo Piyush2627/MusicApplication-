@@ -13,6 +13,7 @@ export interface EnquiryDocument extends Document {
   instrument: string;
   preferredTime: string;
   message?: string;
+  followUp?: Date;
   status: "pending" | "contacted" | "enrolled";
   remarks: Remark[];
   createdAt: Date;
@@ -35,6 +36,7 @@ const enquirySchema = new Schema<EnquiryDocument>(
     instrument: { type: String, required: true },
     preferredTime: { type: String, required: true },
     message: { type: String },
+    followUp: { type: Date },
     status: {
       type: String,
       enum: ["pending", "contacted", "enrolled"],

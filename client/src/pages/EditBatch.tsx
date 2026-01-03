@@ -11,7 +11,7 @@ function EditBatch() {
   const [searchTerm, setSearchTerm] = useState("");
   const [form, setForm] = useState<ClassBatchType>({
     _id: "",
-    batchInstructor: "",
+    batchInstructor: { _id: "", userName: "", email: "" },
     batchName: "",
     batchStudents: [],
     batchTiming: "",
@@ -28,7 +28,7 @@ function EditBatch() {
     };
 
     const res = await axios.put(
-      `${import.meta.env.VITE_API_BASE_URL}/api/batches/${batchId}`,
+      `${import.meta.env.VITE_API_BASE_URL}/batches/${batchId}`,
       payload,
     );
     return res.data;
@@ -60,16 +60,16 @@ function EditBatch() {
 
   const fetchStudents = async () => {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+      `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
     );
-    return res.data as StudentsType[];
+    return res.data.data as StudentsType[];
   };
 
   const fetchBatch = async () => {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/batches/${batchId}`,
+      `${import.meta.env.VITE_API_BASE_URL}/batches/${batchId}`,
     );
-    return res.data as ClassBatchType;
+    return res.data.data as ClassBatchType;
   };
 
   const { data: studentData, isLoading: isStudentsLoading } = useQuery<

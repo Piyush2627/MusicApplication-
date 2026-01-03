@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import ThemeToggleButton from "../components/common/ThemeToggleButton";
 
 function SettingsPage() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function SettingsPage() {
       >
         Logout
       </button>
+      <ThemeToggleButton />
     </div>
   );
 }

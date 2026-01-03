@@ -23,7 +23,7 @@ function AdminSignUpPage() {
   const registerUserOnclick = async () => {
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/signup`,
+        `${import.meta.env.VITE_API_BASE_URL}/signup`,
         isUserRegistration,
       );
       console.log(res);

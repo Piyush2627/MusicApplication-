@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler";
 import { Payment } from "../model/paymentModel";
 import mongoose from "mongoose";
+import { ApiResponse } from "../utils/ApiResponse";
 
 // @desc    Create a new payment
 // @route   POST /api/payments
@@ -10,7 +11,9 @@ export const createPayment = asyncHandler(
   async (req: Request, res: Response) => {
     const payment = new Payment(req.body);
     await payment.save();
-    res.status(201).json(payment);
+    res
+      .status(201)
+      .json(new ApiResponse(201, payment, "Payment created successfully"));
   }
 );
 
@@ -24,7 +27,9 @@ export const getPaymentById = asyncHandler(
       res.status(404);
       throw new Error("Payment not found");
     }
-    res.json(payment);
+    res
+      .status(200)
+      .json(new ApiResponse(200, payment, "Payment fetched successfully"));
   }
 );
 
@@ -40,7 +45,9 @@ export const getAllPayments = asyncHandler(
     if (month) filter.month = month;
 
     const payments = await Payment.find(filter).populate("student");
-    res.json(payments);
+    res
+      .status(200)
+      .json(new ApiResponse(200, payments, "Payments fetched successfully"));
   }
 );
 
@@ -63,7 +70,11 @@ export const updatePayment = asyncHandler(
       throw new Error("Payment not found");
     }
 
-    res.json(updatedPayment);
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, updatedPayment, "Payment updated successfully")
+      );
   }
 );
 
@@ -77,6 +88,8 @@ export const deletePayment = asyncHandler(
       res.status(404);
       throw new Error("Payment not found");
     }
-    res.json({ message: "Payment deleted successfully" });
+    res
+      .status(200)
+      .json(new ApiResponse(200, null, "Payment deleted successfully"));
   }
 );

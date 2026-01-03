@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "../utils/asyncHandler";
 import InstrumentRental from "../model/InstrumentRentalModel";
+import { ApiResponse } from "../utils/ApiResponse";
 
 // @desc    Create a new rental
 // @route   POST /api/rentals
@@ -8,7 +9,9 @@ export const createRental = asyncHandler(
   async (req: Request, res: Response) => {
     const rental = new InstrumentRental(req.body);
     const savedRental = await rental.save();
-    res.status(201).json(savedRental);
+    res
+      .status(201)
+      .json(new ApiResponse(201, savedRental, "Rental created successfully"));
   }
 );
 
@@ -17,7 +20,9 @@ export const createRental = asyncHandler(
 export const getAllRentals = asyncHandler(
   async (_req: Request, res: Response) => {
     const rentals = await InstrumentRental.find();
-    res.status(200).json(rentals);
+    res
+      .status(200)
+      .json(new ApiResponse(200, rentals, "Rentals fetched successfully"));
   }
 );
 
@@ -30,7 +35,9 @@ export const getRentalById = asyncHandler(
       res.status(404);
       throw new Error("Rental not found");
     }
-    res.status(200).json(rental);
+    res
+      .status(200)
+      .json(new ApiResponse(200, rental, "Rental fetched successfully"));
   }
 );
 
@@ -48,7 +55,9 @@ export const updateRental = asyncHandler(
       res.status(404);
       throw new Error("Rental not found");
     }
-    res.status(200).json(updatedRental);
+    res
+      .status(200)
+      .json(new ApiResponse(200, updatedRental, "Rental updated successfully"));
   }
 );
 
@@ -61,6 +70,8 @@ export const deleteRental = asyncHandler(
       res.status(404);
       throw new Error("Rental not found");
     }
-    res.status(200).json({ message: "Rental deleted successfully" });
+    res
+      .status(200)
+      .json(new ApiResponse(200, null, "Rental deleted successfully"));
   }
 );

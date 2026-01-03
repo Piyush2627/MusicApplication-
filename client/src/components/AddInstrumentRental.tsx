@@ -17,7 +17,7 @@ const AddInstrumentRental: React.FC = () => {
   const mutation = useMutation({
     mutationFn: async () => {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/instrument`,
+        `${import.meta.env.VITE_API_BASE_URL}/instrument`,
         {
           ...formData,
           rentAmount: Number(formData.rentAmount),

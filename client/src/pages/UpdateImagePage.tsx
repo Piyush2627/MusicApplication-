@@ -18,9 +18,9 @@ function UpdateImagePage() {
   const FetchStudent = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/getStudent/${prams.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/getStudent/${prams.id}`,
       );
-      setIsStudentData(response.data);
+      setIsStudentData(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +31,7 @@ function UpdateImagePage() {
   const updateProfilePhotoButton = async () => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/updateStudent/${prams.id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/updateStudent/${prams.id}`,
         isStudentInput,
       );
       console.log(response.data);

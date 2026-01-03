@@ -27,9 +27,9 @@ const EditStudentPage = () => {
     queryKey: ["student", Id],
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/getStudent/${Id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/getStudent/${Id}`,
       );
-      return res.data;
+      return res.data.data;
     },
     enabled: !!Id,
   });
@@ -87,7 +87,7 @@ const EditStudentPage = () => {
   const mutation = useMutation({
     mutationFn: async (updatedData: StudentsType) => {
       return axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/api/updateStudent/${Id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/updateStudent/${Id}`,
         updatedData,
       );
     },
@@ -150,7 +150,18 @@ const EditStudentPage = () => {
             placeholder="Enter email"
           />
         </div>
-
+        <div>
+          <label className="mb-1 block text-sm font-medium text-gray-700">
+            Instrument
+          </label>
+          <CustomInput
+            name="studentsInstruments"
+            type="tel"
+            value={form.studentsInstruments}
+            onChange={handleChange}
+            placeholder="Enter mobile number"
+          />
+        </div>
         {/* Mobile Number */}
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-700">

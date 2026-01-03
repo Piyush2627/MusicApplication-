@@ -11,15 +11,12 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 
-// Define the type of the context value
 interface SidebarContextType {
   expanded: boolean;
 }
 
-// Provide a default context (you can use `undefined` if you add checks later)
 const SidebarContext = createContext<SidebarContextType>({ expanded: true });
 
-// Props for Sidebar
 interface SidebarProps {
   children: ReactNode;
 }
@@ -28,12 +25,12 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <aside className="h-screen">
+    <aside className="h-screen bg-white dark:bg-black">
       <nav className="flex h-full flex-col justify-between">
         <div className="flex items-center justify-between p-4 pb-2">
           <button
             onClick={() => setExpanded((curr) => !curr)}
-            className="rounded-lg bg-gray-50 p-1.5 hover:bg-gray-100"
+            className="rounded bg-black p-2 text-gray-600 hover:bg-gray-50"
           >
             {expanded ? <FaArrowLeft /> : <FaAlignRight />}
           </button>

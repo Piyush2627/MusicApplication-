@@ -21,17 +21,15 @@ function AddAttendanceForm() {
   const queryClient = useQueryClient();
 
   const fetchClassBatch = async () => {
-    const res = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/batches`,
-    );
-    return res.data;
+    const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/batches`);
+    return res.data.data;
   };
 
   const fetchAllStudents = async () => {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/getAllStudent`,
+      `${import.meta.env.VITE_API_BASE_URL}/getAllStudent`,
     ); // adjust path if needed
-    return res.data;
+    return res.data.data;
   };
 
   const { data: ClassBatchResData } = useQuery<ClassBatchType[]>({
@@ -55,7 +53,7 @@ function AddAttendanceForm() {
       }[];
     }) => {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/attendance`,
+        `${import.meta.env.VITE_API_BASE_URL}/attendance`,
         payload,
       );
       return res.data;
