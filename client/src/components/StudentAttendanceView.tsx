@@ -1,7 +1,7 @@
 import axios from "axios";
 import { type AttendanceType } from "../types/index.types";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const id = "6953a3e8a21ae765b9ed57ee";
 const fetchAttendance = async (): Promise<AttendanceType[]> => {
@@ -31,7 +31,6 @@ const chunk = (arr: AttendanceType[]) => {
 };
 
 function StudentAttendanceView() {
-  const [isAttendanceData, setIsAttendance] = useState<[]>();
   const { data: AttendanceData = [] } = useQuery({
     queryKey: ["attendance"],
     queryFn: fetchAttendance,

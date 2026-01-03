@@ -1,10 +1,5 @@
 import React, { useState, type FormEvent, useEffect } from "react";
-import {
-  useMutation,
-  usePrefetchQuery,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { UserType } from "../types/index.types";
 import axios from "axios";
 

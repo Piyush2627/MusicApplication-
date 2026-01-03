@@ -14,9 +14,6 @@ import {
   FaMapMarkerAlt,
   FaGlobe,
   FaCity,
-  FaUserGraduate,
-  FaIdCard,
-  FaMapMarkedAlt,
 } from "react-icons/fa";
 
 function AddStudentsPage() {

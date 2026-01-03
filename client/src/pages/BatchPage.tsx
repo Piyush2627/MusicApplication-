@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { CreateBatchForm } from "../components/CreateBatchForm";
 import AddModal from "../components/AddModal";
-import useAuth from "../hooks/userAuth";
 import BatchCalender from "../components/BatchCalender";
 
 const BatchPage: React.FC = () => {
