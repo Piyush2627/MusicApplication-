@@ -39,9 +39,9 @@ function MainLayout() {
   }
 
   return (
-    <div>
+    <>
       <Outlet />
-    </div>
+    </>
   );
 }
 

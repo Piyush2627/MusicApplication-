@@ -1,4 +1,3 @@
-// Sidebar.tsx
 import { FaAlignRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -30,7 +29,7 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
         <div className="flex items-center justify-between p-4 pb-2">
           <button
             onClick={() => setExpanded((curr) => !curr)}
-            className="rounded bg-black p-2 text-gray-600 hover:bg-gray-50"
+            className="rounded p-2 text-gray-600 hover:bg-gray-100 dark:bg-black"
           >
             {expanded ? <FaArrowLeft /> : <FaAlignRight />}
           </button>
@@ -41,7 +40,6 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
           </SidebarContext.Provider>
         </div>
 
-        {/* <img src={profile} alt="Profile" className="w-10 h-10 rounded-md" /> */}
         <div
           className={`flex items-center justify-between overflow-hidden transition-all ${
             expanded ? "ml-3 w-52" : "w-0"
@@ -51,7 +49,6 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
             <h4 className="font-semibold">SvaRa Music</h4>
             <span className="text-xs text-gray-600">svaraMusic@gmail.com</span>
           </div>
-          {/* Replace with an icon if needed */}
         </div>
       </nav>
     </aside>
@@ -60,7 +57,6 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
 
 export default Sidebar;
 
-// Props for SidebarItem
 interface SidebarItemProps {
   icon: ReactNode;
   text: string;

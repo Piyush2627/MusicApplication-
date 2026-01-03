@@ -9,18 +9,21 @@ function ThemeToggleButton() {
   }, []);
 
   useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
   return (
-    <div className="min-h-screen bg-white text-black transition-colors dark:bg-gray-900 dark:text-white">
-      <button
-        onClick={() => setDarkMode((prev) => !prev)}
-        className="rounded bg-gray-200 px-4 py-2 dark:bg-gray-700"
-      >
-        Toggle {darkMode ? "Light" : "Dark"} Mode
-      </button>
-    </div>
+    <button
+      onClick={() => setDarkMode((prev) => !prev)}
+      className="rounded bg-gray-200 px-4 py-2 dark:bg-gray-700"
+    >
+      Toggle {darkMode ? "Light" : "Dark"} Mode
+    </button>
   );
 }
 export default ThemeToggleButton;

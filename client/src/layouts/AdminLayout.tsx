@@ -75,7 +75,7 @@ function AdminLayout() {
           />
         </Sidebar>
       </div>
-      <div className="h-screen flex-1 overflow-y-auto rounded-2xl">
+      <div className="h-screen flex-1 overflow-y-auto dark:bg-black">
         <Outlet />
       </div>
     </div>
